@@ -1,0 +1,45 @@
+\hypertarget{client_2src_2main_8c}{}\doxysection{client/src/main.c File Reference}
+\label{client_2src_2main_8c}\index{client/src/main.c@{client/src/main.c}}
+{\ttfamily \#include \char`\"{}constants.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}error.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}client.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{client_2src_2main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{client_2src_2main_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{client_2src_2main_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & \\
+\hline
+{\em argv} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+non-\/zéro value if code of error 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{client_2src_2main_8c_source_l00038}{38}} of file \mbox{\hyperlink{client_2src_2main_8c_source}{main.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \{}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ checkArgsValue\ =\ 0;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{return}\ (checkArgsValue\ =\ \mbox{\hyperlink{client_2include_2error_8h_a01ae8bcafd7693f8dbba7d3832495bb0}{check\_args}}(argc,\ argv[1],\ argv[2]))\ ==}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}\ ?\ \mbox{\hyperlink{client_2include_2constants_8h_a7492418ddd07230bf42eba42096c4954}{EPITECH\_ERROR}}\ :\ \mbox{\hyperlink{client_8h_afea84661089c07b9fe02d2ccc8ced3c8}{run\_client}}(argv[1],\ checkArgsValue);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \}}
+
+\end{DoxyCode}

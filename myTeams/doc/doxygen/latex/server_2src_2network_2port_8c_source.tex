@@ -1,0 +1,50 @@
+\hypertarget{server_2src_2network_2port_8c_source}{}\doxysection{port.\+c}
+\label{server_2src_2network_2port_8c_source}\index{server/src/network/port.c@{server/src/network/port.c}}
+\mbox{\hyperlink{server_2src_2network_2port_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00002}00002\ \textcolor{comment}{**\ EPITECH\ PROJECT,\ 2023}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00003}00003\ \textcolor{comment}{**\ myTeams}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00004}00004\ \textcolor{comment}{**\ File\ description:}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00005}00005\ \textcolor{comment}{**\ port}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00006}00006\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00008}00008\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00009}00009\ \textcolor{comment}{**\ EPITECH\ PROJECT,\ 2023}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00010}00010\ \textcolor{comment}{**\ myTeams}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00011}00011\ \textcolor{comment}{**\ File\ description:}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00012}00012\ \textcolor{comment}{**\ port}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00013}00013\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00015}00015\ \textcolor{comment}{//SYSTEMS\ INCLUDES}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00017}00017\ \textcolor{preprocessor}{\#include\ <ctype.h>}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00018}00018\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00020}00020\ \textcolor{comment}{//LOCALES\ INCLUDES}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}constants.h"{}}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00022}00022\ \textcolor{preprocessor}{\#include\ "{}utils.h"{}}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00025}00025\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ port\_error(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{client_2include_2utils_8h_a72c8f4d91900c034a50347ca6a3fced1}{my\_put\_strerr}}(\textcolor{stringliteral}{"{}Bad\ arguments:\ port:\ 1025\ <\ [port]\ <\ 65535\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00031}\mbox{\hyperlink{server_2src_2network_2port_8c_a3d3b46c9100d325753034e7a26ff79a9}{00031}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{client_2src_2network_2port_8c_ad028a86cacfb614812ed65dc121da7c2}{is\_port}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *args)}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00032}00032\ \{}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{int}\ argsToInt\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0,\ n\ =\ strlen(args);\ i\ <\ n;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isdigit(args[i]))}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ port\_error();}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{return}\ (argsToInt\ =\ atoi(args))\ <\ \mbox{\hyperlink{client_2include_2constants_8h_a3f17f4aa2d0c58c9e5fcb731b340df76}{PORT\_MIN}}}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ ||\ argsToInt\ >\ \mbox{\hyperlink{client_2include_2constants_8h_a1a22c8aea5fa6c6834bc64756d239ae4}{PORT\_MAX}}\ ?\ port\_error()\ :\ argsToInt;}
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{server_2src_2network_2port_8c_source_l00044}00044\ \}}
+
+\end{DoxyCode}

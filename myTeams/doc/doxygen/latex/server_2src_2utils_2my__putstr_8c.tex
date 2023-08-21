@@ -1,0 +1,55 @@
+\hypertarget{server_2src_2utils_2my__putstr_8c}{}\doxysection{server/src/utils/my\+\_\+putstr.c File Reference}
+\label{server_2src_2utils_2my__putstr_8c}\index{server/src/utils/my\_putstr.c@{server/src/utils/my\_putstr.c}}
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{server_2src_2utils_2my__putstr_8c_a72c8f4d91900c034a50347ca6a3fced1}{my\+\_\+put\+\_\+strerr}} (char const $\ast$str)
+\item 
+int \mbox{\hyperlink{server_2src_2utils_2my__putstr_8c_a089e37a67b0a5ffb3a57fe37436f6f65}{my\+\_\+put\+\_\+str}} (char const $\ast$str)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{server_2src_2utils_2my__putstr_8c_a089e37a67b0a5ffb3a57fe37436f6f65}\label{server_2src_2utils_2my__putstr_8c_a089e37a67b0a5ffb3a57fe37436f6f65}} 
+\index{my\_putstr.c@{my\_putstr.c}!my\_put\_str@{my\_put\_str}}
+\index{my\_put\_str@{my\_put\_str}!my\_putstr.c@{my\_putstr.c}}
+\doxysubsubsection{\texorpdfstring{my\_put\_str()}{my\_put\_str()}}
+{\footnotesize\ttfamily int my\+\_\+put\+\_\+str (\begin{DoxyParamCaption}\item[{char const $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2src_2utils_2my__putstr_8c_source_l00021}{21}} of file \mbox{\hyperlink{server_2src_2utils_2my__putstr_8c_source}{my\+\_\+putstr.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ str[i]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'};\ i++)\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (write(1,\ \&str[i],\ 1)\ ==\ -\/1)}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 84;}
+\DoxyCodeLine{00026\ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00028\ \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{server_2src_2utils_2my__putstr_8c_a72c8f4d91900c034a50347ca6a3fced1}\label{server_2src_2utils_2my__putstr_8c_a72c8f4d91900c034a50347ca6a3fced1}} 
+\index{my\_putstr.c@{my\_putstr.c}!my\_put\_strerr@{my\_put\_strerr}}
+\index{my\_put\_strerr@{my\_put\_strerr}!my\_putstr.c@{my\_putstr.c}}
+\doxysubsubsection{\texorpdfstring{my\_put\_strerr()}{my\_put\_strerr()}}
+{\footnotesize\ttfamily int my\+\_\+put\+\_\+strerr (\begin{DoxyParamCaption}\item[{char const $\ast$}]{str }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2src_2utils_2my__putstr_8c_source_l00012}{12}} of file \mbox{\hyperlink{server_2src_2utils_2my__putstr_8c_source}{my\+\_\+putstr.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ str[i]\ !=\ \textcolor{charliteral}{'\(\backslash\)0'};\ i++)\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (write(2,\ \&str[i],\ 1)\ ==\ -\/1)}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 84;}
+\DoxyCodeLine{00017\ \ \ \ \ \}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00019\ \}}
+
+\end{DoxyCode}

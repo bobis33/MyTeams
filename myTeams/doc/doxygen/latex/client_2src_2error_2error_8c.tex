@@ -1,0 +1,46 @@
+\hypertarget{client_2src_2error_2error_8c}{}\doxysection{client/src/error/error.c File Reference}
+\label{client_2src_2error_2error_8c}\index{client/src/error/error.c@{client/src/error/error.c}}
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}constants.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}network.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{client_2src_2error_2error_8c_a01ae8bcafd7693f8dbba7d3832495bb0}{check\+\_\+args}} (int argc, const char $\ast$ip, const char $\ast$port)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{client_2src_2error_2error_8c_a01ae8bcafd7693f8dbba7d3832495bb0}\label{client_2src_2error_2error_8c_a01ae8bcafd7693f8dbba7d3832495bb0}} 
+\index{error.c@{error.c}!check\_args@{check\_args}}
+\index{check\_args@{check\_args}!error.c@{error.c}}
+\doxysubsubsection{\texorpdfstring{check\_args()}{check\_args()}}
+{\footnotesize\ttfamily int check\+\_\+args (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{const char $\ast$}]{ip,  }\item[{const char $\ast$}]{port }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{client_2src_2error_2error_8c_source_l00027}{27}} of file \mbox{\hyperlink{client_2src_2error_2error_8c_source}{error.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \{}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ port\_to\_int\ =\ 0;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{if}\ (argc\ !=\ 2\ \&\&\ argc\ !=\ 3)}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ print\_help(\mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}});}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordflow}{if}\ (argc\ ==\ 2\ \&\&\ strcmp(ip,\ \textcolor{stringliteral}{"{}-\/help"{}})\ ==\ 0)}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ print\_help(\mbox{\hyperlink{client_2include_2constants_8h_aa90cac659d18e8ef6294c7ae337f6b58}{SUCCESS}});}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{if}\ (argc\ ==\ 3)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2network_8h_a52f597985865e15c465f034880930fa0}{is\_ip}}(ip)\ ==\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ ||\ (port\_to\_int\ =\ \mbox{\hyperlink{client_2include_2network_8h_ad028a86cacfb614812ed65dc121da7c2}{is\_port}}(port))\ ==\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}\ ?\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}\ :\ port\_to\_int;}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{return}\ print\_help(\mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}});}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \}}
+
+\end{DoxyCode}

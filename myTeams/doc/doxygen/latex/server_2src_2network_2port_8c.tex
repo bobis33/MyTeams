@@ -1,0 +1,42 @@
+\hypertarget{server_2src_2network_2port_8c}{}\doxysection{server/src/network/port.c File Reference}
+\label{server_2src_2network_2port_8c}\index{server/src/network/port.c@{server/src/network/port.c}}
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}constants.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{server_2src_2network_2port_8c_a3d3b46c9100d325753034e7a26ff79a9}{is\+\_\+port}} (const char $\ast$args)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{server_2src_2network_2port_8c_a3d3b46c9100d325753034e7a26ff79a9}\label{server_2src_2network_2port_8c_a3d3b46c9100d325753034e7a26ff79a9}} 
+\index{port.c@{port.c}!is\_port@{is\_port}}
+\index{is\_port@{is\_port}!port.c@{port.c}}
+\doxysubsubsection{\texorpdfstring{is\_port()}{is\_port()}}
+{\footnotesize\ttfamily int is\+\_\+port (\begin{DoxyParamCaption}\item[{const char $\ast$}]{args }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2src_2network_2port_8c_source_l00031}{31}} of file \mbox{\hyperlink{server_2src_2network_2port_8c_source}{port.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ argsToInt\ =\ 0;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0,\ n\ =\ strlen(args);\ i\ <\ n;\ i++)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isdigit(args[i]))}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ port\_error();}
+\DoxyCodeLine{00039\ \ \ \ \ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{return}\ (argsToInt\ =\ atoi(args))\ <\ \mbox{\hyperlink{client_2include_2constants_8h_a3f17f4aa2d0c58c9e5fcb731b340df76}{PORT\_MIN}}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ ||\ argsToInt\ >\ \mbox{\hyperlink{client_2include_2constants_8h_a1a22c8aea5fa6c6834bc64756d239ae4}{PORT\_MAX}}\ ?\ port\_error()\ :\ argsToInt;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \}}
+
+\end{DoxyCode}

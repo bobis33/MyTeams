@@ -1,0 +1,36 @@
+\hypertarget{server_2src_2main_8c}{}\doxysection{server/src/main.c File Reference}
+\label{server_2src_2main_8c}\index{server/src/main.c@{server/src/main.c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}constants.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}error.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}server.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{server_2src_2main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{server_2src_2main_8c_a0ddf1224851353fc92bfbff6f499fa97}\label{server_2src_2main_8c_a0ddf1224851353fc92bfbff6f499fa97}} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{server_2src_2main_8c_source_l00032}{32}} of file \mbox{\hyperlink{server_2src_2main_8c_source}{main.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033\ \{}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ checkArgsValue\ =\ 0;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ (checkArgsValue\ =\ \mbox{\hyperlink{client_2include_2error_8h_a01ae8bcafd7693f8dbba7d3832495bb0}{check\_args}}(argc,\ argv[1]))\ ==}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}\ ?\ \mbox{\hyperlink{client_2include_2constants_8h_a7492418ddd07230bf42eba42096c4954}{EPITECH\_ERROR}}\ :\ \mbox{\hyperlink{server_8h_a61f685e9274ba8db65eafcfff4e62c2f}{run\_server}}(checkArgsValue);}
+\DoxyCodeLine{00039\ \}}
+
+\end{DoxyCode}

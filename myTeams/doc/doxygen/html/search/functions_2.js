@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['main_0',['main',['../client_2src_2main_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.c'],['../server_2src_2main_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'main(int argc, char *argv[]):&#160;main.c']]],
+  ['my_5fput_5fstr_1',['my_put_str',['../client_2include_2utils_8h.html#a089e37a67b0a5ffb3a57fe37436f6f65',1,'my_put_str(char const *str):&#160;my_putstr.c'],['../client_2src_2utils_2my__putstr_8c.html#a089e37a67b0a5ffb3a57fe37436f6f65',1,'my_put_str(char const *str):&#160;my_putstr.c'],['../server_2include_2utils_8h.html#a089e37a67b0a5ffb3a57fe37436f6f65',1,'my_put_str(char const *str):&#160;my_putstr.c'],['../server_2src_2utils_2my__putstr_8c.html#a089e37a67b0a5ffb3a57fe37436f6f65',1,'my_put_str(char const *str):&#160;my_putstr.c']]],
+  ['my_5fput_5fstrerr_2',['my_put_strerr',['../client_2include_2utils_8h.html#a72c8f4d91900c034a50347ca6a3fced1',1,'my_put_strerr(char const *str):&#160;my_putstr.c'],['../client_2src_2utils_2my__putstr_8c.html#a72c8f4d91900c034a50347ca6a3fced1',1,'my_put_strerr(char const *str):&#160;my_putstr.c'],['../server_2include_2utils_8h.html#a72c8f4d91900c034a50347ca6a3fced1',1,'my_put_strerr(char const *str):&#160;my_putstr.c'],['../server_2src_2utils_2my__putstr_8c.html#a72c8f4d91900c034a50347ca6a3fced1',1,'my_put_strerr(char const *str):&#160;my_putstr.c']]]
+];
