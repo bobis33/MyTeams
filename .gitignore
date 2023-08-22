@@ -1,0 +1,14 @@
+# Exclude everything
+/*
+
+# Except for default project files
+!/client
+!/doc
+!/.github
+!/Makefile
+!/scripts
+!/server
+!.gitignore
+!Doxyfile
+!LICENSE.txt
+!README.md
