@@ -15,11 +15,15 @@
 #include "constants.h"
 #include "utils.h"
 
-
-static int ip_error(void)
+static const int ip_error(const int error_value)
 {
-    my_put_str("Bad arguments: ip_adress: ");
-    perror("inet_pton");
+    my_put_strerr("Bad arguments: ip_adress: ");
+
+    if (error_value == 0)
+        my_put_strerr("Does not contain a character string representing "
+        "a valid network address in the specified address family.\n");
+    if (error_value == -1)
+        perror("inet_pton");
     return ERROR;
 }
 
@@ -27,6 +31,10 @@ int is_ip(const char *ip)
 {
 
     struct sockaddr_in sa;
+    int error_value = 0;
 
-    return inet_pton(AF_INET, ip, &(sa.sin_addr)) != 1 ? ip_error() : SUCCESS;
+    return (error_value = inet_pton(AF_INET,
+                                ip,
+                                &(sa.sin_addr))) != 1 ? ip_error(error_value)
+                                                        : SUCCESS;
 }

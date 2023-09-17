@@ -90,6 +90,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a52f597985865e15c465f034880930fa0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ip_8c.html#a52f597985865e15c465f034880930fa0">is_ip</a> (const char *ip)</td></tr>
+<tr class="memdesc:a52f597985865e15c465f034880930fa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if the ip argument is a valid IPv4 address  <br /></td></tr>
 <tr class="separator:a52f597985865e15c465f034880930fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -109,13 +110,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ip_8c_source.html#l00026">26</a> of file <a class="el" href="ip_8c_source.html">ip.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   27</span>{</div>
-<div class="line"><span class="lineno">   28</span> </div>
-<div class="line"><span class="lineno">   29</span>    <span class="keyword">struct </span>sockaddr_in sa;</div>
-<div class="line"><span class="lineno">   30</span> </div>
-<div class="line"><span class="lineno">   31</span>    <span class="keywordflow">return</span> inet_pton(AF_INET, ip, &amp;(sa.sin_addr)) != 1 ? ip_error() : <a class="code hl_define" href="client_2include_2constants_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS</a>;</div>
-<div class="line"><span class="lineno">   32</span>}</div>
+<p>check if the ip argument is a valid IPv4 address </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ip</td><td>argument representing a valid (or not) network address in the specified address family </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="ip_8c_source.html#l00044">44</a> of file <a class="el" href="ip_8c_source.html">ip.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   45</span>{</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>    <span class="keyword">struct </span>sockaddr_in sa;</div>
+<div class="line"><span class="lineno">   48</span>    <span class="keywordtype">int</span> error_value = 0;</div>
+<div class="line"><span class="lineno">   49</span> </div>
+<div class="line"><span class="lineno">   50</span>    <span class="keywordflow">return</span> (error_value = inet_pton(AF_INET, ip, &amp;(sa.sin_addr))) != 1 ? ip_error(error_value) : <a class="code hl_define" href="client_2include_2constants_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS</a>;</div>
+<div class="line"><span class="lineno">   51</span>}</div>
 <div class="ttc" id="aclient_2include_2constants_8h_html_aa90cac659d18e8ef6294c7ae337f6b58"><div class="ttname"><a href="client_2include_2constants_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS</a></div><div class="ttdeci">#define SUCCESS</div><div class="ttdef"><b>Definition:</b> <a href="client_2include_2constants_8h_source.html#l00012">constants.h:12</a></div></div>
 </div><!-- fragment -->
 </div>

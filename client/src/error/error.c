@@ -13,7 +13,6 @@
 #include "utils.h"
 #include "network.h"
 
-
 static int print_help(const int return_code)
 {
 
@@ -24,7 +23,7 @@ static int print_help(const int return_code)
     return return_code;
 }
 
-int check_args(int argc, const char *ip, const char *port)
+int check_args(const int argc, const char *ip, const char *port)
 {
 
     int port_to_int = 0;

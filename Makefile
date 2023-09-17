@@ -21,6 +21,10 @@ fclean:			clean
 				make fclean -C $(CLIENT)
 				make fclean -C $(SERVER)
 
+tests_run:
+				make tests_run -C $(CLIENT)
+				make tests_run -C $(SERVER)
+
 re:				fclean all
 
 .PHONY:			all clean fclean re

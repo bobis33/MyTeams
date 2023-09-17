@@ -20,17 +20,27 @@ int \mbox{\hyperlink{server_2src_2main_8c_a0ddf1224851353fc92bfbff6f499fa97}{mai
 {\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
 
 
+\begin{DoxyParams}{Parameters}
+{\em argc} & \\
+\hline
+{\em argv} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, 84 on error, error message will be sent on error output 
+\end{DoxyReturn}
 
-Definition at line \mbox{\hyperlink{server_2src_2main_8c_source_l00032}{32}} of file \mbox{\hyperlink{server_2src_2main_8c_source}{main.\+c}}.
+
+Definition at line \mbox{\hyperlink{server_2src_2main_8c_source_l00040}{40}} of file \mbox{\hyperlink{server_2src_2main_8c_source}{main.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00033\ \{}
-\DoxyCodeLine{00034\ }
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ checkArgsValue\ =\ 0;}
-\DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{return}\ (checkArgsValue\ =\ \mbox{\hyperlink{client_2include_2error_8h_a01ae8bcafd7693f8dbba7d3832495bb0}{check\_args}}(argc,\ argv[1]))\ ==}
-\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}\ ?\ \mbox{\hyperlink{client_2include_2constants_8h_a7492418ddd07230bf42eba42096c4954}{EPITECH\_ERROR}}\ :\ \mbox{\hyperlink{server_8h_a61f685e9274ba8db65eafcfff4e62c2f}{run\_server}}(checkArgsValue);}
-\DoxyCodeLine{00039\ \}}
+\DoxyCodeLine{00041\ \{}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{int}\ checkArgsValue\ =\ 0;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ (checkArgsValue\ =\ \mbox{\hyperlink{client_2include_2error_8h_a01ae8bcafd7693f8dbba7d3832495bb0}{check\_args}}(argc,\ argv[1]))\ ==}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}}\ ?\ \mbox{\hyperlink{client_2include_2constants_8h_a7492418ddd07230bf42eba42096c4954}{EPITECH\_ERROR}}\ :\ \mbox{\hyperlink{server_8h_a61f685e9274ba8db65eafcfff4e62c2f}{run\_server}}(checkArgsValue);}
+\DoxyCodeLine{00047\ \}}
 
 \end{DoxyCode}

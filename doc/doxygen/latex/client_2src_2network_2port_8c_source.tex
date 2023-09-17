@@ -18,26 +18,25 @@
 \DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}constants.h"{}}}
 \DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}utils.h"{}}}
 \DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00017}00017\ }
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00018}00018\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ port\_error(\textcolor{keywordtype}{void})}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00019}00019\ \{}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{client_2include_2utils_8h_a72c8f4d91900c034a50347ca6a3fced1}{my\_put\_strerr}}(\textcolor{stringliteral}{"{}Bad\ arguments:\ port:\ 1025\ <\ [port]\ <\ 65535\(\backslash\)n"{}});}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00022}00022\ \}}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00023}00023\ }
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00024}\mbox{\hyperlink{client_2include_2network_8h_ad028a86cacfb614812ed65dc121da7c2}{00024}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{client_2src_2network_2port_8c_ad028a86cacfb614812ed65dc121da7c2}{is\_port}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *port)}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00025}00025\ \{}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00026}00026\ }
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{int}\ argsToInt\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00023}00023\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ port\_error(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00024}00024\ \{}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{client_2include_2utils_8h_a72c8f4d91900c034a50347ca6a3fced1}{my\_put\_strerr}}(\textcolor{stringliteral}{"{}Bad\ arguments:\ port:\ 1025\ <\ [port]\ <\ 65535\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00027}00027\ \}}
 \DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00028}00028\ }
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0,\ lengthPort\ =\ strlen(port);\ i\ <\ lengthPort;\ i++)\ \{}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isdigit(port[i]))}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00032}00032\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00033}00033\ }
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{return}\ (argsToInt\ =\ atoi(port))\ <\ \mbox{\hyperlink{client_2include_2constants_8h_a3f17f4aa2d0c58c9e5fcb731b340df76}{PORT\_MIN}}}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ ||\ argsToInt\ >\ \mbox{\hyperlink{client_2include_2constants_8h_a1a22c8aea5fa6c6834bc64756d239ae4}{PORT\_MAX}}\ ?\ port\_error()\ :\ argsToInt;}
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00036}00036\ }
-\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00037}00037\ \}}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00036}\mbox{\hyperlink{client_2include_2network_8h_ad028a86cacfb614812ed65dc121da7c2}{00036}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{client_2src_2network_2port_8c_ad028a86cacfb614812ed65dc121da7c2}{is\_port}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *port)}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00037}00037\ \{}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{int}\ argsToInt\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00041}00041\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0,\ lengthPort\ =\ strlen(port);\ i\ <\ lengthPort;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00042}00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isdigit(port[i]))}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00044}00044\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{return}\ (argsToInt\ =\ atoi(port))\ <\ \mbox{\hyperlink{client_2include_2constants_8h_a3f17f4aa2d0c58c9e5fcb731b340df76}{PORT\_MIN}}}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ ||\ argsToInt\ >\ \mbox{\hyperlink{client_2include_2constants_8h_a1a22c8aea5fa6c6834bc64756d239ae4}{PORT\_MAX}}\ ?\ port\_error()\ :\ argsToInt;}
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{client_2src_2network_2port_8c_source_l00049}00049\ \}}
 
 \end{DoxyCode}

@@ -19,20 +19,24 @@
 \DoxyCodeLine{\Hypertarget{ip_8c_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}constants.h"{}}}
 \DoxyCodeLine{\Hypertarget{ip_8c_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}utils.h"{}}}
 \DoxyCodeLine{\Hypertarget{ip_8c_source_l00017}00017\ }
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00018}00018\ }
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00019}00019\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ ip\_error(\textcolor{keywordtype}{void})}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00020}00020\ \{}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{client_2include_2utils_8h_a089e37a67b0a5ffb3a57fe37436f6f65}{my\_put\_str}}(\textcolor{stringliteral}{"{}Bad\ arguments:\ ip\_adress:\ "{}});}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00022}00022\ \ \ \ \ perror(\textcolor{stringliteral}{"{}inet\_pton"{}});}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00024}00024\ \}}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00025}00025\ }
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00026}\mbox{\hyperlink{client_2include_2network_8h_a52f597985865e15c465f034880930fa0}{00026}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ip_8c_a52f597985865e15c465f034880930fa0}{is\_ip}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *ip)}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00027}00027\ \{}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00025}00025\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ ip\_error(\textcolor{keywordtype}{int}\ error\_value)}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00026}00026\ \{}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{client_2include_2utils_8h_a72c8f4d91900c034a50347ca6a3fced1}{my\_put\_strerr}}(\textcolor{stringliteral}{"{}Bad\ arguments:\ ip\_adress:\ "{}});}
 \DoxyCodeLine{\Hypertarget{ip_8c_source_l00028}00028\ }
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00029}00029\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ sa;}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00030}00030\ }
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00031}00031\ \ \ \ \ \textcolor{keywordflow}{return}\ inet\_pton(AF\_INET,\ ip,\ \&(sa.sin\_addr))\ !=\ 1\ ?\ ip\_error()\ :\ \mbox{\hyperlink{client_2include_2constants_8h_aa90cac659d18e8ef6294c7ae337f6b58}{SUCCESS}};}
-\DoxyCodeLine{\Hypertarget{ip_8c_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{if}\ (error\_value\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{client_2include_2utils_8h_a72c8f4d91900c034a50347ca6a3fced1}{my\_put\_strerr}}(\textcolor{stringliteral}{"{}Does\ not\ contain\ a\ character\ string\ representing\ a\ valid\ network\ address\ in\ the\ specified\ address\ family.\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00031}00031\ \ \ \ \ if\ (error\_value\ ==\ -\/1)}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00032}00032\ \ \ \ \ \ \ \ \ perror("{}inet\_pton"{});}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00033}00033\ \ \ \ \ return\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00034}00034\ \}}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00044}\mbox{\hyperlink{client_2include_2network_8h_a52f597985865e15c465f034880930fa0}{00044}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{ip_8c_a52f597985865e15c465f034880930fa0}{is\_ip}}(const\ \textcolor{keywordtype}{char}\ *ip)}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00045}00045\ \{}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00047}00047\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ sa;}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{int}\ error\_value\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{return}\ (error\_value\ =\ inet\_pton(AF\_INET,\ ip,\ \&(sa.sin\_addr)))\ !=\ 1\ ?\ ip\_error(error\_value)\ :\ \mbox{\hyperlink{client_2include_2constants_8h_aa90cac659d18e8ef6294c7ae337f6b58}{SUCCESS}};}
+\DoxyCodeLine{\Hypertarget{ip_8c_source_l00051}00051\ \}}
 
 \end{DoxyCode}

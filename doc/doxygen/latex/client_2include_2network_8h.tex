@@ -4,9 +4,9 @@
 \begin{DoxyCompactItemize}
 \item 
 int \mbox{\hyperlink{client_2include_2network_8h_ad028a86cacfb614812ed65dc121da7c2}{is\+\_\+port}} (const char $\ast$port)
-\item 
+\begin{DoxyCompactList}\small\item\em check if the port is available \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{client_2include_2network_8h_a52f597985865e15c465f034880930fa0}{is\+\_\+ip}} (const char $\ast$ip)
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em check if the ip argument is a valid IPv4 address \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Function Documentation}
@@ -18,16 +18,29 @@ int \mbox{\hyperlink{client_2include_2network_8h_a52f597985865e15c465f034880930f
 
 
 
-Definition at line \mbox{\hyperlink{ip_8c_source_l00026}{26}} of file \mbox{\hyperlink{ip_8c_source}{ip.\+c}}.
+check if the ip argument is a valid IPv4 address 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip} & argument representing a valid (or not) network address in the specified address family \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{ip_8c_source_l00044}{44}} of file \mbox{\hyperlink{ip_8c_source}{ip.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00027\ \{}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ sa;}
-\DoxyCodeLine{00030\ }
-\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ inet\_pton(AF\_INET,\ ip,\ \&(sa.sin\_addr))\ !=\ 1\ ?\ ip\_error()\ :\ \mbox{\hyperlink{client_2include_2constants_8h_aa90cac659d18e8ef6294c7ae337f6b58}{SUCCESS}};}
-\DoxyCodeLine{00032\ \}}
+\DoxyCodeLine{00045\ \{}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{struct\ }sockaddr\_in\ sa;}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordtype}{int}\ error\_value\ =\ 0;}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordflow}{return}\ (error\_value\ =\ inet\_pton(AF\_INET,\ ip,\ \&(sa.sin\_addr)))\ !=\ 1\ ?\ ip\_error(error\_value)\ :\ \mbox{\hyperlink{client_2include_2constants_8h_aa90cac659d18e8ef6294c7ae337f6b58}{SUCCESS}};}
+\DoxyCodeLine{00051\ \}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{client_2include_2network_8h_ad028a86cacfb614812ed65dc121da7c2}\label{client_2include_2network_8h_ad028a86cacfb614812ed65dc121da7c2}} 
@@ -38,22 +51,34 @@ Definition at line \mbox{\hyperlink{ip_8c_source_l00026}{26}} of file \mbox{\hyp
 
 
 
-Definition at line \mbox{\hyperlink{client_2src_2network_2port_8c_source_l00024}{24}} of file \mbox{\hyperlink{client_2src_2network_2port_8c_source}{port.\+c}}.
+check if the port is available 
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & argmuent port number \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{client_2src_2network_2port_8c_source_l00036}{36}} of file \mbox{\hyperlink{client_2src_2network_2port_8c_source}{port.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00025\ \{}
-\DoxyCodeLine{00026\ }
-\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{int}\ argsToInt\ =\ 0;}
-\DoxyCodeLine{00028\ }
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0,\ lengthPort\ =\ strlen(port);\ i\ <\ lengthPort;\ i++)\ \{}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isdigit(port[i]))}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
-\DoxyCodeLine{00032\ \ \ \ \ \}}
-\DoxyCodeLine{00033\ }
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{return}\ (argsToInt\ =\ atoi(port))\ <\ \mbox{\hyperlink{client_2include_2constants_8h_a3f17f4aa2d0c58c9e5fcb731b340df76}{PORT\_MIN}}}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ ||\ argsToInt\ >\ \mbox{\hyperlink{client_2include_2constants_8h_a1a22c8aea5fa6c6834bc64756d239ae4}{PORT\_MAX}}\ ?\ port\_error()\ :\ argsToInt;}
-\DoxyCodeLine{00036\ }
-\DoxyCodeLine{00037\ \}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ argsToInt\ =\ 0;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{register}\ \textcolor{keywordtype}{int}\ i\ =\ 0,\ lengthPort\ =\ strlen(port);\ i\ <\ lengthPort;\ i++)\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!isdigit(port[i]))}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{client_2include_2constants_8h_a8fe83ac76edc595f6b98cd4a4127aed5}{ERROR}};}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{return}\ (argsToInt\ =\ atoi(port))\ <\ \mbox{\hyperlink{client_2include_2constants_8h_a3f17f4aa2d0c58c9e5fcb731b340df76}{PORT\_MIN}}}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ ||\ argsToInt\ >\ \mbox{\hyperlink{client_2include_2constants_8h_a1a22c8aea5fa6c6834bc64756d239ae4}{PORT\_MAX}}\ ?\ port\_error()\ :\ argsToInt;}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \}}
 
 \end{DoxyCode}

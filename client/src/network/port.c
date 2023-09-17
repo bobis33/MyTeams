@@ -14,8 +14,7 @@
 #include "constants.h"
 #include "utils.h"
 
-
-static int port_error(void)
+static const int port_error(void)
 {
     my_put_strerr("Bad arguments: port: 1025 < [port] < 65535\n");
     return ERROR;

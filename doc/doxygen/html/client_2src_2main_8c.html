@@ -122,21 +122,21 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>non-zéro value if code of error </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, 84 on error, error message will be sent on error output </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="client_2src_2main_8c_source.html#l00038">38</a> of file <a class="el" href="client_2src_2main_8c_source.html">main.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   39</span>{</div>
-<div class="line"><span class="lineno">   40</span> </div>
-<div class="line"><span class="lineno">   41</span>    <span class="keywordtype">int</span> checkArgsValue = 0;</div>
-<div class="line"><span class="lineno">   42</span> </div>
-<div class="line"><span class="lineno">   43</span>    <span class="keywordflow">return</span> (checkArgsValue = <a class="code hl_function" href="client_2include_2error_8h.html#a01ae8bcafd7693f8dbba7d3832495bb0">check_args</a>(argc, argv[1], argv[2])) ==</div>
-<div class="line"><span class="lineno">   44</span>    <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a> ? <a class="code hl_define" href="client_2include_2constants_8h.html#a7492418ddd07230bf42eba42096c4954">EPITECH_ERROR</a> : <a class="code hl_function" href="client_8h.html#afea84661089c07b9fe02d2ccc8ced3c8">run_client</a>(argv[1], checkArgsValue);</div>
-<div class="line"><span class="lineno">   45</span> </div>
-<div class="line"><span class="lineno">   46</span>}</div>
+<p class="definition">Definition at line <a class="el" href="client_2src_2main_8c_source.html#l00039">39</a> of file <a class="el" href="client_2src_2main_8c_source.html">main.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>{</div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span>    <span class="keywordtype">int</span> checkArgsValue = 0;</div>
+<div class="line"><span class="lineno">   43</span> </div>
+<div class="line"><span class="lineno">   44</span>    <span class="keywordflow">return</span> (checkArgsValue = <a class="code hl_function" href="client_2include_2error_8h.html#a01ae8bcafd7693f8dbba7d3832495bb0">check_args</a>(argc, argv[1], argv[2])) ==</div>
+<div class="line"><span class="lineno">   45</span>    <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a> ? <a class="code hl_define" href="client_2include_2constants_8h.html#a7492418ddd07230bf42eba42096c4954">EPITECH_ERROR</a> : <a class="code hl_function" href="client_8h.html#afea84661089c07b9fe02d2ccc8ced3c8">run_client</a>(argv[1], checkArgsValue);</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>}</div>
 <div class="ttc" id="aclient_2include_2constants_8h_html_a7492418ddd07230bf42eba42096c4954"><div class="ttname"><a href="client_2include_2constants_8h.html#a7492418ddd07230bf42eba42096c4954">EPITECH_ERROR</a></div><div class="ttdeci">#define EPITECH_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="client_2include_2constants_8h_source.html#l00010">constants.h:10</a></div></div>
 <div class="ttc" id="aclient_2include_2constants_8h_html_a8fe83ac76edc595f6b98cd4a4127aed5"><div class="ttname"><a href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a></div><div class="ttdeci">#define ERROR</div><div class="ttdef"><b>Definition:</b> <a href="client_2include_2constants_8h_source.html#l00011">constants.h:11</a></div></div>
-<div class="ttc" id="aclient_2include_2error_8h_html_a01ae8bcafd7693f8dbba7d3832495bb0"><div class="ttname"><a href="client_2include_2error_8h.html#a01ae8bcafd7693f8dbba7d3832495bb0">check_args</a></div><div class="ttdeci">int check_args(int argc, const char *ip, const char *port)</div><div class="ttdef"><b>Definition:</b> <a href="client_2src_2error_2error_8c_source.html#l00027">error.c:27</a></div></div>
-<div class="ttc" id="aclient_8h_html_afea84661089c07b9fe02d2ccc8ced3c8"><div class="ttname"><a href="client_8h.html#afea84661089c07b9fe02d2ccc8ced3c8">run_client</a></div><div class="ttdeci">int run_client(const char *ip, const int port)</div><div class="ttdef"><b>Definition:</b> <a href="client_8c_source.html#l00021">client.c:21</a></div></div>
+<div class="ttc" id="aclient_2include_2error_8h_html_a01ae8bcafd7693f8dbba7d3832495bb0"><div class="ttname"><a href="client_2include_2error_8h.html#a01ae8bcafd7693f8dbba7d3832495bb0">check_args</a></div><div class="ttdeci">int check_args(int argc, const char *ip, const char *port)</div><div class="ttdoc">check if arguments are valid</div><div class="ttdef"><b>Definition:</b> <a href="client_2src_2error_2error_8c_source.html#l00042">error.c:42</a></div></div>
+<div class="ttc" id="aclient_8h_html_afea84661089c07b9fe02d2ccc8ced3c8"><div class="ttname"><a href="client_8h.html#afea84661089c07b9fe02d2ccc8ced3c8">run_client</a></div><div class="ttdeci">int run_client(const char *ip, const int port)</div><div class="ttdoc">Run client program.</div><div class="ttdef"><b>Definition:</b> <a href="client_8c_source.html#l00022">client.c:22</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

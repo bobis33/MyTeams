@@ -84,6 +84,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a01ae8bcafd7693f8dbba7d3832495bb0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="client_2include_2error_8h.html#a01ae8bcafd7693f8dbba7d3832495bb0">check_args</a> (int argc, const char *ip, const char *port)</td></tr>
+<tr class="memdesc:a01ae8bcafd7693f8dbba7d3832495bb0"><td class="mdescLeft">&#160;</td><td class="mdescRight">check if arguments are valid  <br /></td></tr>
 <tr class="separator:a01ae8bcafd7693f8dbba7d3832495bb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -119,29 +120,40 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="client_2src_2error_2error_8c_source.html#l00027">27</a> of file <a class="el" href="client_2src_2error_2error_8c_source.html">error.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   28</span>{</div>
-<div class="line"><span class="lineno">   29</span> </div>
-<div class="line"><span class="lineno">   30</span>    <span class="keywordtype">int</span> port_to_int = 0;</div>
-<div class="line"><span class="lineno">   31</span> </div>
-<div class="line"><span class="lineno">   32</span>    <span class="keywordflow">if</span> (argc != 2 &amp;&amp; argc != 3)</div>
-<div class="line"><span class="lineno">   33</span>        <span class="keywordflow">return</span> print_help(<a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a>);</div>
-<div class="line"><span class="lineno">   34</span> </div>
-<div class="line"><span class="lineno">   35</span>    <span class="keywordflow">if</span> (argc == 2 &amp;&amp; strcmp(ip, <span class="stringliteral">&quot;-help&quot;</span>) == 0)</div>
-<div class="line"><span class="lineno">   36</span>        <span class="keywordflow">return</span> print_help(<a class="code hl_define" href="client_2include_2constants_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS</a>);</div>
-<div class="line"><span class="lineno">   37</span> </div>
-<div class="line"><span class="lineno">   38</span>    <span class="keywordflow">if</span> (argc == 3) {</div>
-<div class="line"><span class="lineno">   39</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="client_2include_2network_8h.html#a52f597985865e15c465f034880930fa0">is_ip</a>(ip) == <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a></div>
-<div class="line"><span class="lineno">   40</span>            || (port_to_int = <a class="code hl_function" href="client_2include_2network_8h.html#ad028a86cacfb614812ed65dc121da7c2">is_port</a>(port)) == <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a> ? <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a> : port_to_int;</div>
-<div class="line"><span class="lineno">   41</span>    }</div>
-<div class="line"><span class="lineno">   42</span> </div>
-<div class="line"><span class="lineno">   43</span>    <span class="keywordflow">return</span> print_help(<a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a>);</div>
+<p>check if arguments are valid </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argc</td><td></td></tr>
+    <tr><td class="paramname">ip</td><td>arguments that represent the server ip address </td></tr>
+    <tr><td class="paramname">port</td><td>arguments that represent the server port </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>return the port on success, error code on failure </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="client_2src_2error_2error_8c_source.html#l00042">42</a> of file <a class="el" href="client_2src_2error_2error_8c_source.html">error.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   43</span>{</div>
 <div class="line"><span class="lineno">   44</span> </div>
-<div class="line"><span class="lineno">   45</span>}</div>
+<div class="line"><span class="lineno">   45</span>    <span class="keywordtype">int</span> port_to_int = 0;</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>    <span class="keywordflow">if</span> (argc != 2 &amp;&amp; argc != 3)</div>
+<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">return</span> print_help(<a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a>);</div>
+<div class="line"><span class="lineno">   49</span> </div>
+<div class="line"><span class="lineno">   50</span>    <span class="keywordflow">if</span> (argc == 2 &amp;&amp; strcmp(ip, <span class="stringliteral">&quot;-help&quot;</span>) == 0)</div>
+<div class="line"><span class="lineno">   51</span>        <span class="keywordflow">return</span> print_help(<a class="code hl_define" href="client_2include_2constants_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS</a>);</div>
+<div class="line"><span class="lineno">   52</span> </div>
+<div class="line"><span class="lineno">   53</span>    <span class="keywordflow">if</span> (argc == 3) {</div>
+<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="client_2include_2network_8h.html#a52f597985865e15c465f034880930fa0">is_ip</a>(ip) == <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a></div>
+<div class="line"><span class="lineno">   55</span>            || (port_to_int = <a class="code hl_function" href="client_2include_2network_8h.html#ad028a86cacfb614812ed65dc121da7c2">is_port</a>(port)) == <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a> ? <a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a> : port_to_int;</div>
+<div class="line"><span class="lineno">   56</span>    }</div>
+<div class="line"><span class="lineno">   57</span> </div>
+<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> print_help(<a class="code hl_define" href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a>);</div>
+<div class="line"><span class="lineno">   59</span> </div>
+<div class="line"><span class="lineno">   60</span>}</div>
 <div class="ttc" id="aclient_2include_2constants_8h_html_a8fe83ac76edc595f6b98cd4a4127aed5"><div class="ttname"><a href="client_2include_2constants_8h.html#a8fe83ac76edc595f6b98cd4a4127aed5">ERROR</a></div><div class="ttdeci">#define ERROR</div><div class="ttdef"><b>Definition:</b> <a href="client_2include_2constants_8h_source.html#l00011">constants.h:11</a></div></div>
 <div class="ttc" id="aclient_2include_2constants_8h_html_aa90cac659d18e8ef6294c7ae337f6b58"><div class="ttname"><a href="client_2include_2constants_8h.html#aa90cac659d18e8ef6294c7ae337f6b58">SUCCESS</a></div><div class="ttdeci">#define SUCCESS</div><div class="ttdef"><b>Definition:</b> <a href="client_2include_2constants_8h_source.html#l00012">constants.h:12</a></div></div>
-<div class="ttc" id="aclient_2include_2network_8h_html_a52f597985865e15c465f034880930fa0"><div class="ttname"><a href="client_2include_2network_8h.html#a52f597985865e15c465f034880930fa0">is_ip</a></div><div class="ttdeci">int is_ip(const char *ip)</div><div class="ttdef"><b>Definition:</b> <a href="ip_8c_source.html#l00026">ip.c:26</a></div></div>
-<div class="ttc" id="aclient_2include_2network_8h_html_ad028a86cacfb614812ed65dc121da7c2"><div class="ttname"><a href="client_2include_2network_8h.html#ad028a86cacfb614812ed65dc121da7c2">is_port</a></div><div class="ttdeci">int is_port(const char *port)</div><div class="ttdef"><b>Definition:</b> <a href="client_2src_2network_2port_8c_source.html#l00024">port.c:24</a></div></div>
+<div class="ttc" id="aclient_2include_2network_8h_html_a52f597985865e15c465f034880930fa0"><div class="ttname"><a href="client_2include_2network_8h.html#a52f597985865e15c465f034880930fa0">is_ip</a></div><div class="ttdeci">int is_ip(const char *ip)</div><div class="ttdoc">check if the ip argument is a valid IPv4 address</div><div class="ttdef"><b>Definition:</b> <a href="ip_8c_source.html#l00044">ip.c:44</a></div></div>
+<div class="ttc" id="aclient_2include_2network_8h_html_ad028a86cacfb614812ed65dc121da7c2"><div class="ttname"><a href="client_2include_2network_8h.html#ad028a86cacfb614812ed65dc121da7c2">is_port</a></div><div class="ttdeci">int is_port(const char *port)</div><div class="ttdoc">check if the port is available</div><div class="ttdef"><b>Definition:</b> <a href="client_2src_2network_2port_8c_source.html#l00036">port.c:36</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

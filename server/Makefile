@@ -11,8 +11,10 @@ SRC_MAIN 		=	src/main.c
 SRC_UTILS		=	src/utils/my_putstr.c
 
 SRC				=	src/error/error.c						\
+					src/network/ip.c						\
 					src/network/port.c						\
-					src/server/server.c
+					src/server/server.c						\
+					src/network/socket.c
 
 SRC_TEST		=	units_tests/test.c
 
@@ -47,13 +49,13 @@ debug:				$(OBJ)
 
 clean:
 					rm -rf $(OBJ)
-					rm -rf $(NAME)
 
 clean_test:
 					rm -rf $(OBJ_TEST)
 					find . -name "*.gcda" -delete -or -name "*.gcno" -delete
 
 fclean:				clean clean_test
+					rm -rf $(NAME)
 					rm -rf $(NAME_TEST)
 
 tests_run:			CFLAGS += --coverage

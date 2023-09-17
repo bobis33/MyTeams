@@ -5,13 +5,6 @@
 ** port
 */
 
-/*
-** EPITECH PROJECT, 2023
-** myTeams
-** File description:
-** port
-*/
-
 //SYSTEMS INCLUDES
 #include <string.h>
 #include <ctype.h>
@@ -22,23 +15,23 @@
 #include "utils.h"
 
 
-static int port_error(void)
+static const int port_error(void)
 {
     my_put_strerr("Bad arguments: port: 1025 < [port] < 65535\n");
     return ERROR;
 }
 
-int is_port(const char *args)
+int is_port(const char *port)
 {
 
-    int argsToInt = 0;
+    int portAsInteger = 0;
 
-    for (register int i = 0, n = strlen(args); i < n; i++) {
-        if (!isdigit(args[i]))
+    for (register int i = 0, n = strlen(port); i < n; i++) {
+        if (!isdigit(port[i]))
             return port_error();
     }
 
-    return (argsToInt = atoi(args)) < PORT_MIN
-            || argsToInt > PORT_MAX ? port_error() : argsToInt;
+    return (portAsInteger = atoi(port)) < PORT_MIN
+            || portAsInteger > PORT_MAX ? port_error() : portAsInteger;
 
 }

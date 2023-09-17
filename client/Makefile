@@ -48,13 +48,13 @@ debug:				$(OBJ)
 
 clean:
 					rm -rf $(OBJ)
-					rm -rf $(NAME)
 
 clean_test:
 					rm -rf $(OBJ_TEST)
 					find . -name "*.gcda" -delete -or -name "*.gcno" -delete
 
 fclean:				clean clean_test
+					rm -rf $(NAME)
 					rm -rf $(NAME_TEST)
 
 tests_run:			CFLAGS += --coverage

@@ -7,5 +7,5 @@
 
 #ifndef ERROR_H_
     #define ERROR_H_
-    int check_args(int argc, const char *port);
+    int check_args(const int argc, const char *port);
 #endif /* !ERROR_H_ */
