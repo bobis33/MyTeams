@@ -1,0 +1,6 @@
+./libs/myteams/libmyteams.so:1: MAJOR:C-O1
+./libs/myteams/logging_client.h:134: MAJOR:C-F5
+./libs/myteams/logging_client.h:210: MAJOR:C-F5
+./libs/myteams/logging_client.h:389: MAJOR:C-F5
+./libs/myteams/logging_client.h:435: MAJOR:C-F5
+./libs/myteams/logging_server.h:54: MAJOR:C-F5

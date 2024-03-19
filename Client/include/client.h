@@ -10,7 +10,8 @@
 #ifndef CLIENT_H
     #define CLIENT_H
 
-#define SUCCESS (0)
-#define EPITECH_ERROR (84)
+    #define SUCCESS (0)
+    #define ERROR (-1)
+    #define EPITECH_ERROR (84)
 
 #endif /* !CLIENT_H */
