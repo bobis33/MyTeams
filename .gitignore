@@ -14,15 +14,6 @@
 myteams_server
 myteams_cli
 
-# CMake
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-Makefile
-cmake_install.cmake
-cmake-build-debug/*
-build/*
-
 # Others
 .vscode
 .cache
