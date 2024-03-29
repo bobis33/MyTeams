@@ -7,11 +7,6 @@
 
 #pragma once
 
-#ifndef SERVER_H
-    #define SERVER_H
-
-    #define SUCCESS (0)
-    #define ERROR (-1)
-    #define EPITECH_ERROR (84)
-
-#endif /* !SERVER_H */
+#define SUCCESS 0
+#define ERROR -1
+#define EXIT_ERROR 84
