@@ -11,7 +11,7 @@ OBJ =           $(SRC:.c=.o)
 
 INC =           -I./include
 
-CFLAGS =		-W -Wall -Werror -Wextra $(INC) -std=c11 -D_GNU_SOURCE
+CFLAGS =		-W -Wall -Werror -Wextra $(INC) -std=c11 -D_GNU_SOURCE -luuid
 
 NAME =          myteams_cli
 

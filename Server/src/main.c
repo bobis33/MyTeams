@@ -7,6 +7,44 @@
 
 #include "server.h"
 
+#include <unistd.h>
+#include <stdio.h>
+
+int handle_client_command(server_t *server, int clientSocket)
+{
+    char buffer[1024] = {0};
+    int readSize = read(clientSocket, buffer, 1024);
+
+    if (readSize == 0) {
+        kick_client(server, clientSocket);
+        return SUCCESS;
+    }
+    if (readSize == -1)
+        return ERROR;
+    printf("Received: \"%s\" from client %d\n", buffer, clientSocket);
+    return SUCCESS;
+}
+
+int handle_ready_fd(server_t *server, int fd)
+{
+    if (fd == server->socket)
+        return accept_client(server);
+    else
+        return handle_client_command(server, fd);
+}
+
+int update_server(server_t *server)
+{
+    fd_set readReadyFds = server->readFds;
+
+    if (select(FD_SETSIZE, &readReadyFds, NULL, NULL, NULL) == -1)
+        return ERROR;
+    for (int i = 0; i < FD_SETSIZE; i++)
+        if (FD_ISSET(i, &readReadyFds))
+            return handle_ready_fd(server, i);
+    return SUCCESS;
+}
+
 int main(int argc, const char *argv[])
 {
     server_t server = {0};
@@ -15,6 +53,12 @@ int main(int argc, const char *argv[])
     (void) argv;
     if (!init_server(&server, 8080))
         return EXIT_ERROR;
+    while (!server.shouldStop) {
+        if (update_server(&server) == ERROR) {
+            shutdown_server(&server);
+            return EXIT_ERROR;
+        }
+    }
     shutdown_server(&server);
     return SUCCESS;
 }

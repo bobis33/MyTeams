@@ -9,15 +9,15 @@
 
 #include <sys/select.h>
 #include <stdbool.h>
+#include <uuid/uuid.h>
 
 #define SUCCESS 0
 #define ERROR -1
 #define EXIT_ERROR 84
 
 typedef struct client_s {
-    char *ip;
-    int port;
     int socket;
+    uuid_t uuid;
 } client_t;
 
 typedef struct server_s {
@@ -28,5 +28,7 @@ typedef struct server_s {
 } server_t;
 
 bool init_server(server_t *server, int port);
-
 void shutdown_server(server_t *server);
+
+int accept_client(server_t *server);
+void kick_client(server_t *server, int clientSocket);
