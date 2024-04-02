@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2024
 ** B-NWP-400-BDX-4-1-myteams-yohan.decamps
 ** File description:
-** server
+** server management
 */
 
 #include "server.h"
@@ -43,6 +43,7 @@ static bool bind_and_listen(server_t *server, int port)
 bool init_server(server_t *server, int port)
 {
     memset(server->clients, 0, sizeof(server->clients));
+    memset(server->users, 0, sizeof(server->users));
     server->socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (server->socket == -1)
         return false;

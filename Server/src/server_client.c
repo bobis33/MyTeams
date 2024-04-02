@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 int accept_client(server_t *server)
 {
@@ -19,7 +20,7 @@ int accept_client(server_t *server)
     if (clientSocket == -1)
         return ERROR;
     server->clients[clientSocket].socket = clientSocket;
-    uuid_generate(server->clients[clientSocket].uuid);
+    server->clients[clientSocket].user = NULL;
     FD_SET(clientSocket, &server->readFds);
     return SUCCESS;
 }
@@ -28,7 +29,6 @@ void kick_client(server_t *server, int clientSocket)
 {
     close(clientSocket);
     server->clients[clientSocket].socket = 0;
-    uuid_clear(server->clients[clientSocket].uuid);
     FD_CLR(clientSocket, &server->readFds);
 }
 
