@@ -21,7 +21,7 @@ int handle_client_command(server_t *server, int clientSocket)
     }
     if (readSize == -1)
         return ERROR;
-    printf("Received: \"%s\" from client %d\n", buffer, clientSocket);
+    printf("Received from %d: %s", clientSocket, buffer);
     return SUCCESS;
 }
 
