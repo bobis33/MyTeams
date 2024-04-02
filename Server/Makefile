@@ -5,9 +5,12 @@
 ## Makefile
 ##
 
-SRC =			src/main.c			\
-				src/server.c		\
-				src/server_client.c
+SRC =			src/main.c						\
+				src/utils.c						\
+				src/server_management.c			\
+				src/server_client.c				\
+\
+				src/commands/log_commands.c	\
 
 OBJ =			$(SRC:.c=.o)
 
@@ -16,7 +19,7 @@ LIB =			-luuid -L./../libs/myteams -lmyteams
 RPATH = 		-Wl,-rpath,./libs/myteams
 
 CFLAGS =		-W -Wall -Werror -Wextra $(INC) $(LIB) $(RPATH) \
-				-std=c11 -D_GNU_SOURCE
+				-std=c11 -D_GNU_SOURCE -g3
 
 NAME =			myteams_server
 

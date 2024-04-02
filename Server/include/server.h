@@ -15,9 +15,19 @@
 #define ERROR -1
 #define EXIT_ERROR 84
 
+#define MAX_NAME_LENGTH 32
+#define MAX_DESCRIPTION_LENGTH 255
+#define MAX_BODY_LENGTH 512
+#define MAX_USERS 1024
+
+typedef struct user_s {
+    char name[MAX_NAME_LENGTH];
+    uuid_t uuid;
+} user_t;
+
 typedef struct client_s {
     int socket;
-    uuid_t uuid;
+    user_t *user;
 } client_t;
 
 typedef struct server_s {
@@ -25,6 +35,8 @@ typedef struct server_s {
     bool shouldStop;
     client_t clients[FD_SETSIZE];
     fd_set readFds;
+    user_t users[MAX_USERS];
+    int usersCount;
 } server_t;
 
 bool init_server(server_t *server, int port);
@@ -32,4 +44,5 @@ void shutdown_server(server_t *server);
 
 int accept_client(server_t *server);
 void kick_client(server_t *server, int clientSocket);
-__attribute__((format(printf, 3, 4))) void send_to_client(server_t *server, int clientSocket, char *message, ...);
+__attribute__((format(printf, 3, 4)))
+void send_to_client(server_t *server, int clientSocket, char *message, ...);
