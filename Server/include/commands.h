@@ -13,3 +13,4 @@ void handle_unimplemented_command(
     server_t *server, int clientSocket, char *command);
 
 void handle_login_command(server_t *server, int clientSocket, char *command);
+void handle_logout_command(server_t *server, int clientSocket, char *command);

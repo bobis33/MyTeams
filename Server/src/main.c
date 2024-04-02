@@ -6,8 +6,8 @@
 */
 
 #include "server.h"
-
 #include "commands.h"
+#include "utils.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -22,7 +22,7 @@ static const char *commands[] = {
 static void (*functions[])(server_t *server, int clientSocket,
     char *command) = {
     handle_unimplemented_command, handle_login_command,
-    handle_unimplemented_command, handle_unimplemented_command,
+    handle_logout_command, handle_unimplemented_command,
     handle_unimplemented_command, handle_unimplemented_command,
     handle_unimplemented_command, handle_unimplemented_command,
     handle_unimplemented_command, handle_unimplemented_command,
@@ -35,14 +35,6 @@ void handle_unimplemented_command(
 {
     (void) command;
     send_to_client(server, clientSocket, "Error: Command not implemented\n");
-}
-
-static char *clear_command(char *command)
-{
-    for (int i = 0; command[i] != '\0'; i++)
-        if (command[i] == '\n')
-            command[i] = '\0';
-    return command;
 }
 
 int handle_client_command(server_t *server, int clientSocket)
