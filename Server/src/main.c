@@ -12,30 +12,32 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <signal.h>
 
 static const char *commands[] = {
     "/help", "/login", "/logout", "/users", "/user", "/send",
     "/messages", "/subscribe", "/subscribed", "/unsubscribe",
-    "/use", "/create", "/list", "/info"
+    "/use", "/create", "/list", "/info", "/stop"
 };
 
 static void (*functions[])(server_t *server, int clientSocket,
     char *command) = {
-    handle_unimplemented_command, handle_login_command,
-    handle_logout_command, handle_unimplemented_command,
-    handle_unimplemented_command, handle_unimplemented_command,
-    handle_unimplemented_command, handle_unimplemented_command,
-    handle_unimplemented_command, handle_unimplemented_command,
-    handle_unimplemented_command, handle_unimplemented_command,
-    handle_unimplemented_command
+    handle_unimplemented_command,   // handle_help_command,
+    handle_login_command,           // handle_login_command,
+    handle_logout_command,          // handle_logout_command,
+    handle_unimplemented_command,   // handle_users_command,
+    handle_unimplemented_command,   // handle_user_command,
+    handle_unimplemented_command,   // handle_send_command,
+    handle_unimplemented_command,   // handle_messages_command,
+    handle_unimplemented_command,   // handle_subscribe_command,
+    handle_unimplemented_command,   // handle_subscribed_command,
+    handle_unimplemented_command,   // handle_unsubscribe_command,
+    handle_unimplemented_command,   // handle_use_command,
+    handle_unimplemented_command,   // handle_create_command,
+    handle_unimplemented_command,   // handle_list_command,
+    handle_unimplemented_command,   // handle_info_command,
+    handle_stop_server_command      // handle_stop_server_command
 };
-
-void handle_unimplemented_command(
-    server_t *server, int clientSocket, char *command)
-{
-    (void) command;
-    send_to_client(server, clientSocket, "Error: Command not implemented\n");
-}
 
 int handle_client_command(server_t *server, int clientSocket)
 {
@@ -49,7 +51,7 @@ int handle_client_command(server_t *server, int clientSocket)
     }
     if (readSize == -1)
         return ERROR;
-    for (int i = 0; i < 13; i++)
+    for (int i = 0; i < 15; i++)
         if (strncmp(buffer, commands[i], strlen(commands[i])) == 0) {
             functions[i](server, clientSocket, buffer);
             return SUCCESS;
@@ -81,15 +83,33 @@ int update_server(server_t *server)
     return SUCCESS;
 }
 
+static bool *stop_signal_catched(void)
+{
+    static bool globalStop = false;
+
+    return &globalStop;
+}
+
+static void my_handler(int signal)
+{
+    (void) signal;
+    *stop_signal_catched() = true;
+}
+
 int main(int argc, const char *argv[])
 {
     server_t server = {0};
+    struct sigaction sigIntHandler;
 
+    sigIntHandler.sa_handler = my_handler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, NULL);
     (void) argc;
     (void) argv;
     if (!init_server(&server, 8080))
         return EXIT_ERROR;
-    while (!server.shouldStop) {
+    while (!server.shouldStop && !*stop_signal_catched()) {
         if (update_server(&server) == ERROR) {
             shutdown_server(&server);
             return EXIT_ERROR;

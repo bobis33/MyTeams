@@ -7,12 +7,24 @@
 
 #include "server.h"
 
-#include <sys/select.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
+#include "logging_server.h"
+
 #include <netinet/in.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
+
+static void save_users(server_t *server)
+{
+    FILE *file = fopen("datas/server_users.save", "w");
+
+    if (!file)
+        return;
+    fprintf(file, "%d\n", server->usersCount);
+    for (int i = 0; i < server->usersCount; i++)
+        fwrite(&server->users[i], sizeof(user_t), 1, file);
+    fclose(file);
+}
 
 void shutdown_server(server_t *server)
 {
@@ -20,6 +32,7 @@ void shutdown_server(server_t *server)
         if (server->clients[i].socket != 0)
             close(server->clients[i].socket);
     close(server->socket);
+    save_users(server);
 }
 
 static bool bind_and_listen(server_t *server, int port)
@@ -40,6 +53,22 @@ static bool bind_and_listen(server_t *server, int port)
     return true;
 }
 
+static void load_users(server_t *server)
+{
+    FILE *file = fopen("datas/server_users.save", "r");
+    char uuidStr[37] = {0};
+
+    if (!file)
+        return;
+    fscanf(file, "%d\n", &server->usersCount);
+    for (int i = 0; i < server->usersCount; i++) {
+        fread(&server->users[i], sizeof(user_t), 1, file);
+        uuid_unparse(server->users[i].uuid, uuidStr);
+        server_event_user_loaded(uuidStr, server->users[i].name);
+    }
+    fclose(file);
+}
+
 bool init_server(server_t *server, int port)
 {
     memset(server->clients, 0, sizeof(server->clients));
@@ -54,5 +83,8 @@ bool init_server(server_t *server, int port)
     }
     FD_ZERO(&server->readFds);
     FD_SET(server->socket, &server->readFds);
-    return bind_and_listen(server, port);
+    if (bind_and_listen(server, port) == false)
+        return false;
+    load_users(server);
+    return true;
 }
