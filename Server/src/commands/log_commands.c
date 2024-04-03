@@ -65,15 +65,16 @@ void handle_logout_command(server_t *server, int clientSocket, char *command)
 
     (void) command;
     if (strncmp(command, "/logout\r\n", 9) != 0) {
-        send_to_client(server, clientSocket, "Error: syntax\n");
+        send_to_client(server, clientSocket, "500: invalid syntax\n");
         return;
     }
     if (server->clients[clientSocket].user == NULL) {
-        send_to_client(server, clientSocket, "Error: You are not logged in\n");
+        send_to_client(server, clientSocket, "502: not logged in\n");
         return;
     }
-    send_to_client(server, clientSocket, "Successfully logged out\n");
     uuid_unparse(server->clients[clientSocket].user->uuid, uuidStr);
     server_event_user_logged_out(uuidStr);
     server->clients[clientSocket].user = NULL;
+    send_to_client(server, clientSocket,
+        "101: successfully logged out [\"%s\"]\n", uuidStr);
 }
