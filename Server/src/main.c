@@ -22,21 +22,21 @@ static const char *commands[] = {
 
 static void (*functions[])(server_t *server, int clientSocket,
     char *command) = {
-    handle_unimplemented_command,   // handle_help_command,
-    handle_login_command,           // handle_login_command,
-    handle_logout_command,          // handle_logout_command,
-    handle_unimplemented_command,   // handle_users_command,
-    handle_unimplemented_command,   // handle_user_command,
-    handle_unimplemented_command,   // handle_send_command,
-    handle_unimplemented_command,   // handle_messages_command,
-    handle_unimplemented_command,   // handle_subscribe_command,
-    handle_unimplemented_command,   // handle_subscribed_command,
-    handle_unimplemented_command,   // handle_unsubscribe_command,
-    handle_unimplemented_command,   // handle_use_command,
-    handle_unimplemented_command,   // handle_create_command,
-    handle_unimplemented_command,   // handle_list_command,
-    handle_unimplemented_command,   // handle_info_command,
-    handle_stop_server_command      // handle_stop_server_command
+    handle_unimplemented_command,   // help,
+    handle_login_command,           // login,
+    handle_logout_command,          // logout,
+    handle_users_command,           // users,
+    handle_unimplemented_command,   // user,
+    handle_unimplemented_command,   // send,
+    handle_unimplemented_command,   // messages,
+    handle_unimplemented_command,   // subscribe,
+    handle_unimplemented_command,   // subscribed,
+    handle_unimplemented_command,   // unsubscribe,
+    handle_unimplemented_command,   // use,
+    handle_unimplemented_command,   // create,
+    handle_unimplemented_command,   // list,
+    handle_unimplemented_command,   // info,
+    handle_stop_server_command      // stop
 };
 
 int handle_client_command(server_t *server, int clientSocket)
