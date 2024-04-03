@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <signal.h>
 
 static const char *commands[] = {
     "/help", "/login", "/logout", "/users", "/user", "/send",
@@ -82,15 +83,33 @@ int update_server(server_t *server)
     return SUCCESS;
 }
 
+static bool *stop_signal_catched(void)
+{
+    static bool globalStop = false;
+
+    return &globalStop;
+}
+
+static void my_handler(int signal)
+{
+    (void) signal;
+    *stop_signal_catched() = true;
+}
+
 int main(int argc, const char *argv[])
 {
     server_t server = {0};
+    struct sigaction sigIntHandler;
 
+    sigIntHandler.sa_handler = my_handler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
+    sigaction(SIGINT, &sigIntHandler, NULL);
     (void) argc;
     (void) argv;
     if (!init_server(&server, 8080))
         return EXIT_ERROR;
-    while (!server.shouldStop) {
+    while (!server.shouldStop && !*stop_signal_catched()) {
         if (update_server(&server) == ERROR) {
             shutdown_server(&server);
             return EXIT_ERROR;

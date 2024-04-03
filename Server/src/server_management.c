@@ -7,13 +7,12 @@
 
 #include "server.h"
 
-#include <sys/select.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
+#include "logging_server.h"
+
 #include <netinet/in.h>
 #include <unistd.h>
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 static void save_users(server_t *server)
 {
@@ -57,12 +56,16 @@ static bool bind_and_listen(server_t *server, int port)
 static void load_users(server_t *server)
 {
     FILE *file = fopen("datas/server_users.save", "r");
+    char uuidStr[37] = {0};
 
     if (!file)
         return;
     fscanf(file, "%d\n", &server->usersCount);
-    for (int i = 0; i < server->usersCount; i++)
+    for (int i = 0; i < server->usersCount; i++) {
         fread(&server->users[i], sizeof(user_t), 1, file);
+        uuid_unparse(server->users[i].uuid, uuidStr);
+        server_event_user_loaded(uuidStr, server->users[i].name);
+    }
     fclose(file);
 }
 
