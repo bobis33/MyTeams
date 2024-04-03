@@ -14,6 +14,34 @@
 #include <string.h>
 #include <signal.h>
 
+// static void handle_users_command(server_t *server, int clientSocket,
+//     char *command)
+// {
+//     char buffer[1024] = {0};
+//     int offset = 0;
+
+//     if (strncmp(command, "/users\r\n", 8) != 0) {
+//         send_to_client(server, clientSocket, "Error: invalid cmd syntax\n");
+//         return;
+//     }
+//     if (server->clients[clientSocket].user == NULL) {
+//         send_to_client(server, clientSocket, "Error: not logged in\n");
+//         return;
+//     }
+//     offset += sprintf(buffer, "Users:\n");
+//     for (int i = 0; i < server->usersCount; i++)
+//         offset += sprintf(buffer + offset, "- %s\n", server->users[i].name);
+//     send_to_client(server, clientSocket, "%s", buffer);
+// }
+
+// static void handle_user_command(server_t *server, int clientSocket,
+//     char *command)
+// {
+//     (void) server;
+//     (void) clientSocket;
+//     (void) command;
+// }
+
 static const char *commands[] = {
     "/help", "/login", "/logout", "/users", "/user", "/send",
     "/messages", "/subscribe", "/subscribed", "/unsubscribe",
@@ -22,21 +50,21 @@ static const char *commands[] = {
 
 static void (*functions[])(server_t *server, int clientSocket,
     char *command) = {
-    handle_unimplemented_command,   // handle_help_command,
-    handle_login_command,           // handle_login_command,
-    handle_logout_command,          // handle_logout_command,
-    handle_unimplemented_command,   // handle_users_command,
-    handle_unimplemented_command,   // handle_user_command,
-    handle_unimplemented_command,   // handle_send_command,
-    handle_unimplemented_command,   // handle_messages_command,
-    handle_unimplemented_command,   // handle_subscribe_command,
-    handle_unimplemented_command,   // handle_subscribed_command,
-    handle_unimplemented_command,   // handle_unsubscribe_command,
-    handle_unimplemented_command,   // handle_use_command,
-    handle_unimplemented_command,   // handle_create_command,
-    handle_unimplemented_command,   // handle_list_command,
-    handle_unimplemented_command,   // handle_info_command,
-    handle_stop_server_command      // handle_stop_server_command
+    handle_unimplemented_command,   // help,
+    handle_login_command,           // login,
+    handle_logout_command,          // logout,
+    handle_unimplemented_command,   // users,
+    handle_unimplemented_command,   // user,
+    handle_unimplemented_command,   // send,
+    handle_unimplemented_command,   // messages,
+    handle_unimplemented_command,   // subscribe,
+    handle_unimplemented_command,   // subscribed,
+    handle_unimplemented_command,   // unsubscribe,
+    handle_unimplemented_command,   // use,
+    handle_unimplemented_command,   // create,
+    handle_unimplemented_command,   // list,
+    handle_unimplemented_command,   // info,
+    handle_stop_server_command      // stop
 };
 
 int handle_client_command(server_t *server, int clientSocket)
