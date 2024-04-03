@@ -18,3 +18,7 @@ void handle_stop_server_command(server_t *server, int clientSocket,
 // Log commands
 void handle_login_command(server_t *server, int clientSocket, char *command);
 void handle_logout_command(server_t *server, int clientSocket, char *command);
+
+// User commands
+void handle_users_command(server_t *server, int clientSocket, char *command);
+void handle_user_command(server_t *server, int clientSocket, char *command);

@@ -37,4 +37,4 @@ Commands:
         reponses:
         server -> client: "500: invalid syntax"                             (pas d'event, en gros ca doit pas arriver)
         server -> client: "502: no logged in"                               (event: client_error_unauthorized)
-        server -> client: "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]] * user count]"       (event: client_print_users, faut l'appeler pour chaque user de la liste)
+        server -> client: "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]]\n * user count]"       (event: client_print_users, faut l'appeler pour chaque user de la liste)

@@ -12,6 +12,7 @@ SRC =			src/main.c						\
 \
 				src/commands/log_commands.c		\
 				src/commands/misc_commands.c	\
+				src/commands/user_commands.c	\
 
 OBJ =			$(SRC:.c=.o)
 
