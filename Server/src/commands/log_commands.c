@@ -35,6 +35,7 @@ static void log_event_user_logged_in(char *uuid, bool user_created,
         server_event_user_logged_in(uuid);
 }
 
+// What if the user was already logged in?
 void handle_login_command(server_t *server, int clientSocket, char *command)
 {
     user_t *user = NULL;

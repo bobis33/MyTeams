@@ -3,14 +3,16 @@ Codes:
         ...
 
     Error related:
-        "500: invalid syntax"       (pas d'event, en gros ca doit pas arriver)
-        "501: unknown command"      (pas d'event, en gros ca doit pas arriver)
+        "500: invalid syntax"       (jsp quoi mettre)
+        "501: unknown command"      (jsp quoi mettre)
         "502: not logged in"        (event: client_error_unauthorized)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
         "101: successfully logged out ["uuid"]"                                                                                 (event: client_event_logged_out)
         "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]] * user count]"       (event: client_print_users, faut l'appeler pour chaque user de la liste)
+        "103: user details ["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]"                     (event: client_print_user)
+
 
 Commands:
 
@@ -18,7 +20,7 @@ Commands:
         client -> server: "/login ["username"]"
 
         reponses:
-        server -> client: "500: invalid syntax"                             (pas d'event, en gros ca doit pas arriver)
+        server -> client: "500: invalid syntax"                             (jsp quoi mettre)
         server -> client: "100: successfully logged in ["uuid"]"            (event: client_event_logged_in)
 
 
@@ -26,15 +28,24 @@ Commands:
         client -> server: "/logout"
 
         reponses:
-        server -> client: "500: invalid syntax"                             (pas d'event, en gros ca doit pas arriver)
-        server -> client: "502: no logged in"                               (event: client_error_unauthorized)
-        server -> client: "101: successfully logged out ["uuid"]"           (event: client_event_logged_out)
+        server -> client: "500: invalid syntax"                         (jsp quoi mettre)
+        server -> client: "502: no logged in"                           (event: client_error_unauthorized)
+        server -> client: "101: successfully logged out ["uuid"]"       (event: client_event_logged_out)
 
 
     Users:
         client -> server: "/users"
 
         reponses:
-        server -> client: "500: invalid syntax"                             (pas d'event, en gros ca doit pas arriver)
-        server -> client: "502: no logged in"                               (event: client_error_unauthorized)
+        server -> client: "500: invalid syntax"                                                                                                     (jsp quoi mettre)
+        server -> client: "502: no logged in"                                                                                                       (event: client_error_unauthorized)
         server -> client: "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]]\n * user count]"       (event: client_print_users, faut l'appeler pour chaque user de la liste)
+
+
+    User:
+        client -> server: "/user ["uuid"]"
+
+        responses:
+        server -> client: "500: invalid syntax"                                                                                     (jsp quoi mettre)
+        server -> client: "502: no logged in"                                                                                       (event: client_error_unauthorized)
+        server -> client: "103: user details ["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]"       (event: client_print_user)
