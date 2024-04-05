@@ -6,6 +6,7 @@ Codes:
         "500: invalid syntax"       (print la string dans stdout)
         "501: unknown command"      (print la string dans stdout)
         "502: not logged in"        (event: client_error_unauthorized)
+        "503: user not found"       (print la string dans stdout)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
@@ -48,4 +49,5 @@ Commands:
         responses:
         server -> client: "500: invalid syntax"                                                                                     (print la string dans stdout)
         server -> client: "502: no logged in"                                                                                       (event: client_error_unauthorized)
+        server -> client: "503: user not found"                                                                                     (print la string dans stdout)
         server -> client: "103: user details ["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]"       (event: client_print_user)

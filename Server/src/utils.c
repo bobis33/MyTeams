@@ -26,3 +26,12 @@ user_t *search_user_by_name(server_t *server, char *name)
         }
     return NULL;
 }
+
+bool check_user_connection(server_t *server, int clientSocket)
+{
+    if (server->clients[clientSocket].user == NULL) {
+        send_to_client(server, clientSocket, "502: not logged in\n");
+        return false;
+    }
+    return true;
+}

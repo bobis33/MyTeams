@@ -44,5 +44,7 @@ void shutdown_server(server_t *server);
 
 int accept_client(server_t *server);
 void kick_client(server_t *server, int clientSocket);
+bool check_user_connection(server_t *server, int clientSocket);
+
 __attribute__((format(printf, 3, 4)))
 void send_to_client(server_t *server, int clientSocket, char *message, ...);
