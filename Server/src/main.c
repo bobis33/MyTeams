@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
+#include <stdlib.h>
 
 static const char *commands[] = {
     "/help", "/login", "/logout", "/users", "/user", "/send",
@@ -105,9 +106,8 @@ int main(int argc, const char *argv[])
     sigemptyset(&sigIntHandler.sa_mask);
     sigIntHandler.sa_flags = 0;
     sigaction(SIGINT, &sigIntHandler, NULL);
-    (void) argc;
-    (void) argv;
-    if (!init_server(&server, 8080))
+    if ((argc != 2 || atoi(argv[1]) < 1024) ||
+        !init_server(&server, atoi(argv[1])))
         return EXIT_ERROR;
     while (!server.shouldStop && !*stop_signal_catched()) {
         if (update_server(&server) == ERROR) {
