@@ -28,7 +28,7 @@ static void (*functions[])(server_t *server, int clientSocket,
     handle_logout_command,          // logout,
     handle_users_command,           // users,
     handle_user_command,            // user,
-    handle_unimplemented_command,   // send,
+    handle_send_command,            // send,
     handle_unimplemented_command,   // messages,
     handle_unimplemented_command,   // subscribe,
     handle_unimplemented_command,   // subscribed,
@@ -57,10 +57,8 @@ int handle_client_command(server_t *server, int clientSocket)
             functions[i](server, clientSocket, buffer);
             return SUCCESS;
         }
-    if (!commandFound) {
-        send_to_client(server, clientSocket, "Error: Command not found: %s\n",
-        clear_command(buffer));
-    }
+    if (!commandFound)
+        send_to_client(server, clientSocket, "501: unknown command\n");
     return SUCCESS;
 }
 

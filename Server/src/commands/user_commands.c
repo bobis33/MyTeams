@@ -7,6 +7,7 @@
 
 #include "commands.h"
 #include "server.h"
+#include "utils.h"
 
 #include <stdio.h>
 #include <string.h>
