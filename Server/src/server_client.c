@@ -38,6 +38,8 @@ void send_to_client(server_t *server, int clientSocket, char *message, ...)
     struct timeval timeVal = { .tv_sec = 0, .tv_usec = 500 };
     va_list args;
 
+    if (clientSocket <= 0)
+        return;
     FD_ZERO(&writefds);
     FD_SET(clientSocket, &writefds);
     if (select(clientSocket + 1, NULL, &writefds, NULL, &timeVal) == -1)

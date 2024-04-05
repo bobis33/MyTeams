@@ -22,3 +22,6 @@ void handle_logout_command(server_t *server, int clientSocket, char *command);
 // User commands
 void handle_users_command(server_t *server, int clientSocket, char *command);
 void handle_user_command(server_t *server, int clientSocket, char *command);
+
+// Private discussion commands
+void handle_send_command(server_t *server, int clientSocket, char *command);

@@ -7,6 +7,7 @@
 
 #include "commands.h"
 #include "server.h"
+#include "utils.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -33,10 +34,8 @@ void handle_users_command(server_t *server, int clientSocket, char *command)
         send_to_client(server, clientSocket, "500: invalid syntax\n");
         return;
     }
-    if (server->clients[clientSocket].user == NULL) {
-        send_to_client(server, clientSocket, "502: not logged in\n");
+    if (!check_user_connection(server, clientSocket))
         return;
-    }
     offset += sprintf(buffer, "102: user list [");
     for (int i = 0; i < server->usersCount; i++) {
         uuid_unparse(server->users[i].uuid, uuidStr);
@@ -49,7 +48,24 @@ void handle_users_command(server_t *server, int clientSocket, char *command)
 
 void handle_user_command(server_t *server, int clientSocket, char *command)
 {
-    (void) server;
-    (void) clientSocket;
-    (void) command;
+    char uuidStr[37];
+    uuid_t user_uuid;
+
+    if (strncmp(command, "/user \"", 7) != 0 ||
+        command[strlen(command) - 3] != '\"' || strlen(command) != 46) {
+        send_to_client(server, clientSocket, "500: invalid syntax\n");
+        return;
+    }
+    if (!check_user_connection(server, clientSocket))
+        return;
+    uuid_parse(strtok(command + 7, "\""), user_uuid);
+    for (int i = 0; i < server->usersCount; i++)
+        if (uuid_compare(server->users[i].uuid, user_uuid) == 0) {
+            uuid_unparse(server->users[i].uuid, uuidStr);
+            send_to_client(server, clientSocket, "103: user details [\"%s\"]"\
+            "[\"%s\"] [\"%d\"]\n", server->users[i].name, uuidStr,
+                is_user_connected(server, server->users[i].uuid));
+            return;
+        }
+    send_to_client(server, clientSocket, "503: unknown user\n");
 }
