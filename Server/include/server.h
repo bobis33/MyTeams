@@ -20,6 +20,9 @@
 #define MAX_BODY_LENGTH 512
 #define MAX_USERS 1024
 
+#define MAX_PRIVATE_DISCUSSIONS 255
+#define MAX_PRIVATE_DISCUSSION_MESSAGES 1024
+
 typedef struct user_s {
     char name[MAX_NAME_LENGTH];
     uuid_t uuid;
@@ -30,6 +33,17 @@ typedef struct client_s {
     user_t *user;
 } client_t;
 
+typedef struct message_s {
+    user_t *author;
+    char body[MAX_BODY_LENGTH];
+} message_t;
+
+typedef struct private_discussion_s {
+    user_t *users[2];
+    message_t messages[MAX_PRIVATE_DISCUSSION_MESSAGES];
+    int messagesCount;
+} private_discussion_t;
+
 typedef struct server_s {
     int socket;
     bool shouldStop;
@@ -37,6 +51,8 @@ typedef struct server_s {
     fd_set readFds;
     user_t users[MAX_USERS];
     int usersCount;
+    private_discussion_t privateDiscussions[MAX_PRIVATE_DISCUSSIONS];
+    int privateDiscussionsCount;
 } server_t;
 
 bool init_server(server_t *server, int port);

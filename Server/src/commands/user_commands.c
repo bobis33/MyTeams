@@ -66,5 +66,5 @@ void handle_user_command(server_t *server, int clientSocket, char *command)
                 is_user_connected(server, server->users[i].uuid));
             return;
         }
-    send_to_client(server, clientSocket, "503: user not found\n");
+    send_to_client(server, clientSocket, "503: unknown user\n");
 }
