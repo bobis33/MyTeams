@@ -3,8 +3,8 @@ Codes:
         ...
 
     Error related:
-        "500: invalid syntax"       (jsp quoi mettre)
-        "501: unknown command"      (jsp quoi mettre)
+        "500: invalid syntax"       (faut juste print le code)
+        "501: unknown command"      (faut juste print le code)
         "502: not logged in"        (event: client_error_unauthorized)
 
     Commands reponses related:
@@ -20,7 +20,7 @@ Commands:
         client -> server: "/login ["username"]"
 
         reponses:
-        server -> client: "500: invalid syntax"                             (jsp quoi mettre)
+        server -> client: "500: invalid syntax"                             (faut juste print le code)
         server -> client: "100: successfully logged in ["uuid"]"            (event: client_event_logged_in)
 
 
@@ -28,7 +28,7 @@ Commands:
         client -> server: "/logout"
 
         reponses:
-        server -> client: "500: invalid syntax"                         (jsp quoi mettre)
+        server -> client: "500: invalid syntax"                         (faut juste print le code)
         server -> client: "502: no logged in"                           (event: client_error_unauthorized)
         server -> client: "101: successfully logged out ["uuid"]"       (event: client_event_logged_out)
 
@@ -37,7 +37,7 @@ Commands:
         client -> server: "/users"
 
         reponses:
-        server -> client: "500: invalid syntax"                                                                                                     (jsp quoi mettre)
+        server -> client: "500: invalid syntax"                                                                                                     (faut juste print le code)
         server -> client: "502: no logged in"                                                                                                       (event: client_error_unauthorized)
         server -> client: "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]]\n * user count]"       (event: client_print_users, faut l'appeler pour chaque user de la liste)
 
@@ -46,6 +46,6 @@ Commands:
         client -> server: "/user ["uuid"]"
 
         responses:
-        server -> client: "500: invalid syntax"                                                                                     (jsp quoi mettre)
+        server -> client: "500: invalid syntax"                                                                                     (faut juste print le code)
         server -> client: "502: no logged in"                                                                                       (event: client_error_unauthorized)
         server -> client: "103: user details ["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]"       (event: client_print_user)
