@@ -10,6 +10,18 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/select.h>
+
+static bool is_user_connected(server_t *server, uuid_t user_uuid)
+{
+    for (int i = 0; i < FD_SETSIZE; i++) {
+        if (server->clients[i].user != NULL &&
+            uuid_compare(server->clients[i].user->uuid, user_uuid) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
 
 void handle_users_command(server_t *server, int clientSocket, char *command)
 {
@@ -28,8 +40,9 @@ void handle_users_command(server_t *server, int clientSocket, char *command)
     offset += sprintf(buffer, "102: user list [");
     for (int i = 0; i < server->usersCount; i++) {
         uuid_unparse(server->users[i].uuid, uuidStr);
-        offset += sprintf(buffer + offset, "[[\"%s\"] [\"%s\"] [\"%s\"]]\n",
-        server->users[i].name, uuidStr, "0");
+        offset += sprintf(buffer + offset, "[[\"%s\"] [\"%s\"] [\"%d\"]]\n",
+            server->users[i].name, uuidStr,
+            is_user_connected(server, server->users[i].uuid));
     }
     send_to_client(server, clientSocket, "%s]\n", buffer);
 }
