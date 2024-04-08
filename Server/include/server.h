@@ -48,10 +48,10 @@ typedef struct private_discussion_s {
 } private_discussion_t;
 
 typedef struct team_s {
+    uuid_t uuid;
     char name[MAX_NAME_LENGTH];
     char description[MAX_DESCRIPTION_LENGTH];
     user_t *users[MAX_USERS];
-    uuid_t uuid;
     int users_count;
 } team_t;
 

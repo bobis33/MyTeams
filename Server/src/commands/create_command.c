@@ -12,7 +12,8 @@
 
 #include <string.h>
 
-static bool parse_command(char *command, char *teamName, char *description)
+static bool parse_create_team_command(char *command, char *teamName,
+    char *description)
 {
     if (strncmp(command, "/create \"", 9) != 0 ||
         command[strlen(command) - 3] != '\"' || strlen(command) < 15) {
@@ -24,13 +25,14 @@ static bool parse_command(char *command, char *teamName, char *description)
     return true;
 }
 
-void handle_create_command(server_t *server, int clientSocket, char *command)
+static void handle_create_team_command(server_t *server, int clientSocket,
+    char *command)
 {
     char team_name[MAX_NAME_LENGTH] = {0};
     char description[MAX_DESCRIPTION_LENGTH] = {0};
     char uuid[37] = {0};
 
-    if (!parse_command(command, team_name, description)) {
+    if (!parse_create_team_command(command, team_name, description)) {
         send_to_client(server, clientSocket, "500: invalid syntax\n");
         return;
     }
@@ -46,4 +48,10 @@ void handle_create_command(server_t *server, int clientSocket, char *command)
     uuid_unparse(server->teams[server->teams_count - 1].uuid, uuid);
     send_to_client(server, clientSocket, "107: team created [\"%s\"]\n", uuid);
     server_event_team_created(uuid, team_name, description);
+}
+
+void handle_create_command(server_t *server, int clientSocket, char *command)
+{
+    if (true)
+        handle_create_team_command(server, clientSocket, command);
 }
