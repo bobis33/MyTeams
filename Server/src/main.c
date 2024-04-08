@@ -22,7 +22,7 @@ static const char *commands[] = {
 
 static void (*functions[])(server_t *server, int clientSocket,
     char *command) = {
-    handle_unimplemented_command,   // help,
+    handle_help_command,            // help,
     handle_login_command,           // login,
     handle_logout_command,          // logout,
     handle_users_command,           // users,
@@ -127,3 +127,18 @@ int main(int argc, const char *argv[])
 // server_event_user_logged_in          - YES
 // server_event_user_logged_out         - YES
 // server_event_private_message_sended  - YES
+
+// /help : show help                                        - YES
+// /login [“user_name”]                                     - YES
+// /logout                                                  - YES
+// /users                                                   - YES
+// /user [“user_uuid”]                                      - YES
+// /send [“user_uuid”] [“message_body”]                     - YES
+// /messages [“user_uuid”]                                  - NO
+// /subscribe [“team_uuid”]                                 - NO
+// /subscribed ?[“team_uuid”]                               - NO
+// /unsubscribe [“team_uuid”]                               - NO
+// /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - NO
+// /create                                                  - NO
+// /list                                                    - NO
+// /info                                                    - NO

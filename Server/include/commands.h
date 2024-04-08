@@ -14,6 +14,7 @@ void handle_unimplemented_command(
     server_t *server, int clientSocket, char *command);
 void handle_stop_server_command(server_t *server, int clientSocket,
     char *command);
+void handle_help_command(server_t *server, int clientSocket, char *command);
 
 // Log commands
 void handle_login_command(server_t *server, int clientSocket, char *command);
