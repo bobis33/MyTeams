@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+#include "utils.h"
 
 #include "logging_server.h"
 
@@ -26,12 +27,34 @@ static void save_users(server_t *server)
     fclose(file);
 }
 
+static void save_private_discussions(server_t *server)
+{
+    FILE *file = fopen("datas/server_private_discussions.save", "w");
+
+    if (!file)
+        return;
+    fprintf(file, "%d\n", server->private_discussions_count);
+    for (int i = 0; i < server->private_discussions_count; i++) {
+        fwrite(&server->private_discussions[i].user1->uuid, sizeof(uuid_t), 1,
+            file);
+        fwrite(&server->private_discussions[i].user2->uuid, sizeof(uuid_t), 1,
+            file);
+        fwrite(&server->private_discussions[i].messages_count, sizeof(int), 1,
+            file);
+        fwrite(server->private_discussions[i].messages,
+            sizeof(private_discussion_message_t) *
+            MAX_PRIVATE_DISCUSSION_MESSAGES, 1, file);
+    }
+    fclose(file);
+}
+
 void shutdown_server(server_t *server)
 {
     for (int i = 0; i < FD_SETSIZE; i++)
         if (server->clients[i].socket != 0)
             close(server->clients[i].socket);
     close(server->socket);
+    save_private_discussions(server);
     save_users(server);
 }
 
@@ -69,6 +92,30 @@ static void load_users(server_t *server)
     fclose(file);
 }
 
+static void load_private_discussions(server_t *server)
+{
+    FILE *file = fopen("datas/server_private_discussions.save", "r");
+    uuid_t user_uuid;
+
+    if (!file)
+        return;
+    fscanf(file, "%d\n", &server->private_discussions_count);
+    for (int i = 0; i < server->private_discussions_count; i++) {
+        fread(&user_uuid, sizeof(uuid_t), 1, file);
+        server->private_discussions[i].user1 = search_user_by_uuid(server,
+            user_uuid);
+        fread(&user_uuid, sizeof(uuid_t), 1, file);
+        server->private_discussions[i].user2 = search_user_by_uuid(server,
+            user_uuid);
+        fread(&server->private_discussions[i].messages_count, sizeof(int), 1,
+            file);
+        fread(server->private_discussions[i].messages,
+        sizeof(private_discussion_message_t) *
+        MAX_PRIVATE_DISCUSSION_MESSAGES, 1, file);
+    }
+    fclose(file);
+}
+
 bool init_server(server_t *server, int port)
 {
     memset(server->clients, 0, sizeof(server->clients));
@@ -86,5 +133,6 @@ bool init_server(server_t *server, int port)
     if (bind_and_listen(server, port) == false)
         return false;
     load_users(server);
+    load_private_discussions(server);
     return true;
 }

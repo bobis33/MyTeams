@@ -7,7 +7,6 @@
 
 #include "server.h"
 #include "commands.h"
-#include "utils.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -116,3 +115,15 @@ int main(int argc, const char *argv[])
     shutdown_server(&server);
     return SUCCESS;
 }
+
+// server_event_team_created            - NO
+// server_event_channel_created         - NO
+// server_event_thread_created          - NO
+// server_event_reply_created           - NO
+// server_event_user_subscribed         - NO
+// server_event_user_unsubscribed       - NO
+// server_event_user_created            - YES
+// server_event_user_loaded             - YES
+// server_event_user_logged_in          - YES
+// server_event_user_logged_out         - YES
+// server_event_private_message_sended  - YES
