@@ -6,15 +6,16 @@
 ##
 
 SRC =			src/main.c						\
+\
 				src/utils.c						\
 				src/server_management.c			\
 				src/server_client.c				\
 				src/private_discussion.c		\
 \
-				src/commands/log_commands.c		\
-				src/commands/misc_commands.c	\
-				src/commands/user_commands.c	\
-				src/commands/send_command.c		\
+				src/commands/log_commands.c					\
+				src/commands/misc_commands.c				\
+				src/commands/user_commands.c				\
+				src/commands/private_discussion_commands.c	\
 
 OBJ =			$(SRC:.c=.o)
 

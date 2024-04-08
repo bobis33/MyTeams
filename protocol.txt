@@ -3,10 +3,11 @@ Codes:
         "000: execution success"    (en gros t'es content)
 
     Error related:
-        "500: invalid syntax"       (print la string dans stdout)
-        "501: unknown command"      (print la string dans stdout)
-        "502: not logged in"        (event: client_error_unauthorized)
-        "503: unknown user"         (event: client_error_unknown_user)
+        "500: invalid syntax"           (print la string dans stdout)
+        "501: unknown command"          (print la string dans stdout)
+        "502: not logged in"            (event: client_error_unauthorized)
+        "503: unknown user"             (event: client_error_unknown_user)
+        "504: discussion not found"     (print la string dans stdout)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
@@ -15,6 +16,8 @@ Codes:
         "103: user details ["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]"                     (event: client_print_user)
         "104: message received ["sender uuid"] ["message body"]"                                                                (event: client_event_private_message_received)
         "105: ["Help message"]                                                                                                  (juste print le help message)
+        "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]                                (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
+
 
 Commands:
 
@@ -72,3 +75,15 @@ Commands:
         server -> sender: "000: execution success"                                              (en gros t'es content)
 
         server -> receiver : "104: message received ["sender uuid"] ["message body"]"           (event: client_event_private_message_received)
+
+
+    Messages:
+        send -> server: "/messages ["user uuid"]"
+
+        responses:
+        server -> client: "500: invalid syntax"                                                                         (print la string dans stdout)
+        server -> client: "502: no logged in"                                                                           (event: client_error_unauthorized)
+        server -> client: "503: unknown user"                                                                           (event: client_error_unknown_user)
+        server -> client: "504: discussion not found"                                                                   (print la string dans stdout)
+
+        server -> client: "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]      (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)

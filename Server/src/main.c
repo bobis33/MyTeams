@@ -28,7 +28,7 @@ static void (*functions[])(server_t *server, int clientSocket,
     handle_users_command,           // users,
     handle_user_command,            // user,
     handle_send_command,            // send,
-    handle_unimplemented_command,   // messages,
+    handle_messages_command,        // messages,
     handle_unimplemented_command,   // subscribe,
     handle_unimplemented_command,   // subscribed,
     handle_unimplemented_command,   // unsubscribe,
@@ -116,29 +116,65 @@ int main(int argc, const char *argv[])
     return SUCCESS;
 }
 
-// server_event_team_created            - NO
-// server_event_channel_created         - NO
-// server_event_thread_created          - NO
-// server_event_reply_created           - NO
-// server_event_user_subscribed         - NO
-// server_event_user_unsubscribed       - NO
-// server_event_user_created            - YES
-// server_event_user_loaded             - YES
-// server_event_user_logged_in          - YES
-// server_event_user_logged_out         - YES
-// server_event_private_message_sended  - YES
+/* Server log events:
+    server_event_team_created            - NO
+    server_event_channel_created         - NO
+    server_event_thread_created          - NO
+    server_event_reply_created           - NO
+    server_event_user_subscribed         - NO
+    server_event_user_unsubscribed       - NO
+    server_event_user_created            - YES
+    server_event_user_loaded             - YES
+    server_event_user_logged_in          - YES
+    server_event_user_logged_out         - YES
+    server_event_private_message_sended  - YES
+*/
 
-// /help : show help                                        - YES
-// /login [“user_name”]                                     - YES
-// /logout                                                  - YES
-// /users                                                   - YES
-// /user [“user_uuid”]                                      - YES
-// /send [“user_uuid”] [“message_body”]                     - YES
-// /messages [“user_uuid”]                                  - NO
-// /subscribe [“team_uuid”]                                 - NO
-// /subscribed ?[“team_uuid”]                               - NO
-// /unsubscribe [“team_uuid”]                               - NO
-// /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - NO
-// /create                                                  - NO
-// /list                                                    - NO
-// /info                                                    - NO
+/* Client log events:
+    client_event_logged_in                       - YES
+    client_event_logged_out                      - YES
+    client_event_private_message_received        - YES
+    client_event_thread_reply_received           - NO
+    client_event_team_created                    - NO
+    client_event_channel_created                 - NO
+    client_event_thread_created                  - NO
+    client_print_users                           - YES
+    client_print_teams                           - NO
+    client_team_print_channels                   - NO
+    client_channel_print_threads                 - NO
+    client_thread_print_replies                  - NO
+    client_private_message_print_messages        - YES
+    client_error_unknown_team                    - NO
+    client_error_unknown_channel                 - NO
+    client_error_unknown_thread                  - NO
+    client_error_unknown_user                    - YES
+    client_error_unauthorized                    - YES
+    client_error_already_exist                   - YES
+    client_print_user                            - YES
+    client_print_team                            - NO
+    client_print_channel                         - NO
+    client_print_thread                          - NO
+    client_print_team_created                    - NO
+    client_print_channel_created                 - NO
+    client_print_thread_created                  - NO
+    client_print_reply_created                   - NO
+    client_print_subscribed                      - NO
+    client_print_unsubscribed                    - NO
+*/
+
+/* Commands:
+    /help : show help                                        - YES
+    /login [“user_name”]                                     - YES
+    /logout                                                  - YES
+    /users                                                   - YES
+    /user [“user_uuid”]                                      - YES
+    /send [“user_uuid”] [“message_body”]                     - YES
+    /messages [“user_uuid”]                                  - YES
+    /subscribe [“team_uuid”]                                 - NO
+    /subscribed ?[“team_uuid”]                               - NO
+    /unsubscribe [“team_uuid”]                               - NO
+    /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - NO
+    /create                                                  - NO
+    /list                                                    - NO
+    /info                                                    - NO
+*/

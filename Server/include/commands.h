@@ -10,8 +10,8 @@
 #include "server.h"
 
 // Misc commands
-void handle_unimplemented_command(
-    server_t *server, int clientSocket, char *command);
+void handle_unimplemented_command(server_t *server, int clientSocket,
+    char *command);
 void handle_stop_server_command(server_t *server, int clientSocket,
     char *command);
 void handle_help_command(server_t *server, int clientSocket, char *command);
@@ -26,3 +26,5 @@ void handle_user_command(server_t *server, int clientSocket, char *command);
 
 // Private discussion commands
 void handle_send_command(server_t *server, int clientSocket, char *command);
+void handle_messages_command(server_t *server, int clientSocket,
+    char *command);
