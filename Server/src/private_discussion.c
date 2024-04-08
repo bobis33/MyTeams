@@ -8,6 +8,8 @@
 #include "server.h"
 
 #include <string.h>
+#include <uuid/uuid.h>
+#include <stdio.h>
 
 void create_private_discussion(server_t *server, user_t *user1, user_t *user2)
 {
@@ -30,6 +32,10 @@ private_discussion_t *get_private_discussion(server_t *server, user_t *user1,
             server->private_discussions[i].user2 == user2) {
             return &server->private_discussions[i];
         }
+        if (server->private_discussions[i].user1 == user2 &&
+            server->private_discussions[i].user2 == user1) {
+            return &server->private_discussions[i];
+        }
     }
     create_private_discussion(server, user1, user2);
     return &server->private_discussions[server->private_discussions_count - 1];
@@ -38,13 +44,16 @@ private_discussion_t *get_private_discussion(server_t *server, user_t *user1,
 bool add_message_to_private_discussion(server_t *server, user_t *author,
     user_t *receiver, char *message)
 {
-    private_discussion_message_t private_discussion_message;
+    private_discussion_message_t private_discussion_message = {0};
     private_discussion_t *private_discussion =
         get_private_discussion(server, author, receiver);
 
-    if (!author || !receiver || !message)
+    if (!author || !receiver || !message) {
+        printf("Error: add_message_to_private_discussion\n");
         return false;
-    private_discussion_message.author = author;
+    }
+    memcpy(private_discussion_message.author_uuid, author->uuid,
+        sizeof(uuid_t));
     private_discussion_message.timestamp = time(NULL);
     memset(private_discussion_message.body, 0,
         sizeof(private_discussion_message.body));

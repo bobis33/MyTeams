@@ -35,7 +35,7 @@ typedef struct client_s {
 } client_t;
 
 typedef struct private_discussion_message_s {
-    user_t *author;
+    uuid_t author_uuid;
     char body[MAX_BODY_LENGTH];
     time_t timestamp;
 } private_discussion_message_t;
