@@ -3,11 +3,12 @@ Codes:
         "000: execution success"    (en gros t'es content)
 
     Error related:
-        "500: invalid syntax"           (print la string dans stdout)
-        "501: unknown command"          (print la string dans stdout)
-        "502: not logged in"            (event: client_error_unauthorized)
-        "503: unknown user"             (event: client_error_unknown_user)
-        "504: discussion not found"     (print la string dans stdout)
+        "500: invalid syntax"                           (print la string dans stdout)
+        "501: unknown command"                          (print la string dans stdout)
+        "502: not logged in"                            (event: client_error_unauthorized)
+        "503: unknown user"                             (event: client_error_unknown_user)
+        "504: discussion not found"                     (print la string dans stdout)
+        "505: a team with this name already exists"     (event: client_error_already_exist)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
@@ -17,7 +18,7 @@ Codes:
         "104: message received ["sender uuid"] ["message body"]"                                                                (event: client_event_private_message_received)
         "105: ["Help message"]                                                                                                  (juste print le help message)
         "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]                                (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
-
+        "107: team created ["team uuid"]"                                                                                       (event: client_print_team_created)
 
 Commands:
 
@@ -78,7 +79,7 @@ Commands:
 
 
     Messages:
-        send -> server: "/messages ["user uuid"]"
+        client -> server: "/messages ["user uuid"]"
 
         responses:
         server -> client: "500: invalid syntax"                                                                         (print la string dans stdout)
@@ -87,3 +88,17 @@ Commands:
         server -> client: "504: discussion not found"                                                                   (print la string dans stdout)
 
         server -> client: "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]      (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
+
+
+    Messages: (seule la création de team est implémentée)
+        client -> server: "/create ["team_name"] ["team_description"]"              (create a team)
+        client -> server: "/create ["channel_name"] ["channel_description"]"        (create a channel in a team)
+        client -> server: "/create ["thread_title"] ["thread_message"]"             (create a thread in a channel)
+        client -> server: "/create ["comment_body"]"                                (create a reply in a thread)
+
+        reponses:
+        server -> client: "500: invalid syntax"                             (print la string dans stdout)
+        server -> client: "502: no logged in"                               (event: client_error_unauthorized)
+        server -> client: "505: a team with this name already exists"       (event: client_error_already_exist)
+
+        server -> client: "107: team created ["team uuid"]"                 (event: client_print_team_created)

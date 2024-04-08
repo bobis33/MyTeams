@@ -32,8 +32,8 @@ static void (*functions[])(server_t *server, int clientSocket,
     handle_unimplemented_command,   // subscribe,
     handle_unimplemented_command,   // subscribed,
     handle_unimplemented_command,   // unsubscribe,
-    handle_unimplemented_command,   // use,
-    handle_unimplemented_command,   // create,
+    handle_use_command,             // use,
+    handle_create_command,          // create,
     handle_unimplemented_command,   // list,
     handle_unimplemented_command,   // info,
     handle_stop_server_command      // stop
@@ -116,8 +116,25 @@ int main(int argc, const char *argv[])
     return SUCCESS;
 }
 
+/* Commands:
+    /help : show help                                        - YES
+    /login [“user_name”]                                     - YES
+    /logout                                                  - YES
+    /users                                                   - YES
+    /user [“user_uuid”]                                      - YES
+    /send [“user_uuid”] [“message_body”]                     - YES
+    /messages [“user_uuid”]                                  - YES
+    /subscribe [“team_uuid”]                                 - NO
+    /subscribed ?[“team_uuid”]                               - NO
+    /unsubscribe [“team_uuid”]                               - NO
+    /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - WIP
+    /create                                                  - WIP
+    /list                                                    - NO
+    /info                                                    - NO
+*/
+
 /* Server log events:
-    server_event_team_created            - NO
+    server_event_team_created            - YES
     server_event_channel_created         - NO
     server_event_thread_created          - NO
     server_event_reply_created           - NO
@@ -135,7 +152,7 @@ int main(int argc, const char *argv[])
     client_event_logged_out                      - YES
     client_event_private_message_received        - YES
     client_event_thread_reply_received           - NO
-    client_event_team_created                    - NO
+    client_event_team_created                    - YES
     client_event_channel_created                 - NO
     client_event_thread_created                  - NO
     client_print_users                           - YES
@@ -160,21 +177,4 @@ int main(int argc, const char *argv[])
     client_print_reply_created                   - NO
     client_print_subscribed                      - NO
     client_print_unsubscribed                    - NO
-*/
-
-/* Commands:
-    /help : show help                                        - YES
-    /login [“user_name”]                                     - YES
-    /logout                                                  - YES
-    /users                                                   - YES
-    /user [“user_uuid”]                                      - YES
-    /send [“user_uuid”] [“message_body”]                     - YES
-    /messages [“user_uuid”]                                  - YES
-    /subscribe [“team_uuid”]                                 - NO
-    /subscribed ?[“team_uuid”]                               - NO
-    /unsubscribe [“team_uuid”]                               - NO
-    /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - NO
-    /create                                                  - NO
-    /list                                                    - NO
-    /info                                                    - NO
 */
