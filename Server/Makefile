@@ -11,11 +11,15 @@ SRC =			src/main.c						\
 				src/server_management.c			\
 				src/server_client.c				\
 				src/private_discussion.c		\
+				src/teams.c		\
 \
 				src/commands/log_commands.c					\
 				src/commands/misc_commands.c				\
 				src/commands/user_commands.c				\
 				src/commands/private_discussion_commands.c	\
+				src/commands/create_command.c				\
+				src/commands/use_command.c					\
+
 
 OBJ =			$(SRC:.c=.o)
 

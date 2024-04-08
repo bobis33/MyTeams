@@ -47,6 +47,14 @@ typedef struct private_discussion_s {
     int messages_count;
 } private_discussion_t;
 
+typedef struct team_s {
+    uuid_t uuid;
+    char name[MAX_NAME_LENGTH];
+    char description[MAX_DESCRIPTION_LENGTH];
+    user_t *users[MAX_USERS];
+    int users_count;
+} team_t;
+
 typedef struct server_s {
     int socket;
     bool shouldStop;
@@ -56,6 +64,8 @@ typedef struct server_s {
     int usersCount;
     private_discussion_t private_discussions[MAX_PRIVATE_DISCUSSIONS];
     int private_discussions_count;
+    team_t teams[MAX_USERS];
+    int teams_count;
 } server_t;
 
 bool init_server(server_t *server, int port);
@@ -67,9 +77,13 @@ void kick_client(server_t *server, int clientSocket);
 __attribute__((format(printf, 3, 4)))
 void send_to_client(server_t *server, int clientSocket, char *message, ...);
 
-void create_private_discussion(server_t *server, user_t *user1,
-    user_t *user2);
 private_discussion_t *get_private_discussion(server_t *server, user_t *user1,
     user_t *user2);
 bool add_message_to_private_discussion(server_t *server, user_t *author,
     user_t *receiver, char *message);
+
+team_t *create_team(server_t *server, char *teamName, char *description);
+team_t *get_team_by_name(server_t *server, char *teamName);
+team_t *get_team_by_uuid(server_t *server, uuid_t uuid);
+bool add_user_to_team(team_t *team, user_t *user);
+bool remove_user_from_team(server_t *server, team_t *team, user_t *user);
