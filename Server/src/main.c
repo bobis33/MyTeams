@@ -7,7 +7,6 @@
 
 #include "server.h"
 #include "commands.h"
-#include "utils.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -23,7 +22,7 @@ static const char *commands[] = {
 
 static void (*functions[])(server_t *server, int clientSocket,
     char *command) = {
-    handle_unimplemented_command,   // help,
+    handle_help_command,            // help,
     handle_login_command,           // login,
     handle_logout_command,          // logout,
     handle_users_command,           // users,
@@ -116,3 +115,30 @@ int main(int argc, const char *argv[])
     shutdown_server(&server);
     return SUCCESS;
 }
+
+// server_event_team_created            - NO
+// server_event_channel_created         - NO
+// server_event_thread_created          - NO
+// server_event_reply_created           - NO
+// server_event_user_subscribed         - NO
+// server_event_user_unsubscribed       - NO
+// server_event_user_created            - YES
+// server_event_user_loaded             - YES
+// server_event_user_logged_in          - YES
+// server_event_user_logged_out         - YES
+// server_event_private_message_sended  - YES
+
+// /help : show help                                        - YES
+// /login [“user_name”]                                     - YES
+// /logout                                                  - YES
+// /users                                                   - YES
+// /user [“user_uuid”]                                      - YES
+// /send [“user_uuid”] [“message_body”]                     - YES
+// /messages [“user_uuid”]                                  - NO
+// /subscribe [“team_uuid”]                                 - NO
+// /subscribed ?[“team_uuid”]                               - NO
+// /unsubscribe [“team_uuid”]                               - NO
+// /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - NO
+// /create                                                  - NO
+// /list                                                    - NO
+// /info                                                    - NO

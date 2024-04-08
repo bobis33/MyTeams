@@ -22,3 +22,10 @@ void handle_unimplemented_command(server_t *server, int clientSocket,
     (void) command;
     send_to_client(server, clientSocket, "Error: Command not implemented\n");
 }
+
+void handle_help_command(server_t *server, int clientSocket, char *command)
+{
+    (void) command;
+    send_to_client(server, clientSocket, "105: \"This command will "
+    "help you\"\n");
+}
