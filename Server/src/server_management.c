@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 static void save_users(server_t *server)
 {
@@ -56,6 +57,7 @@ void shutdown_server(server_t *server)
     close(server->socket);
     save_private_discussions(server);
     save_users(server);
+    free(server);
 }
 
 static bool bind_and_listen(server_t *server, int port)
@@ -118,8 +120,7 @@ static void load_private_discussions(server_t *server)
 
 bool init_server(server_t *server, int port)
 {
-    memset(server->clients, 0, sizeof(server->clients));
-    memset(server->users, 0, sizeof(server->users));
+    memset(server, 0, sizeof(server_t));
     server->socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (server->socket == -1)
         return false;
