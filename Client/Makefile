@@ -5,7 +5,9 @@
 ## Makefile
 ##
 
-SRC =			src/main.c
+SRC =           src/main.c         \
+                src/parse_args.c   \
+                src/client.c       \
 
 OBJ =			$(SRC:.c=.o)
 
