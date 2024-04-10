@@ -13,23 +13,22 @@ static int handle_input(int file_descriptor)
 {
     char buffer[MAX_CHAR_SIZE] = {0};
     char request[MAX_CHAR_SIZE] = {0};
-    int read_value = {0};
 
-    fgets(request, MAX_CHAR_SIZE, stdin);
-    request[strcspn(request, "\n")] = '\0';
+    if (read(0, request, MAX_CHAR_SIZE) < 0) {
+        perror("read");
+        return ERROR;
+    }
+    request[strcspn(request, "\0")] = '\n';
     if (write(file_descriptor, request, strlen(request)) < 0) {
         perror("write");
         return ERROR;
     }
-    read_value = read(file_descriptor, buffer, MAX_CHAR_SIZE);
-    if (read_value < 0) {
+    if (read(file_descriptor, buffer, MAX_CHAR_SIZE) < 0){
         perror("read");
         return ERROR;
-    } else if (read_value == 0) {
-        return SUCCESS;
     }
-    buffer[read_value] = '\0';
-    write(1, buffer, read_value);
+    buffer[strlen(buffer)] = '\0';
+    write(1, buffer, strlen(buffer));
     return SUCCESS;
 }
 
@@ -40,6 +39,9 @@ static int client_loop(struct client *client)
             return ERROR;
         }
     }
+    close(client->sockfd);
+    free(client->ip);
+    free(client);
     return SUCCESS;
 }
 
