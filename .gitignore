@@ -2,3 +2,7 @@
 myteams_server
 myteams_cli
 .vscode
+.cache
+.idea/*
+.git/*
+*.log
