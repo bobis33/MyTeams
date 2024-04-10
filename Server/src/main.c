@@ -96,23 +96,24 @@ static void my_handler(int signal)
 
 int main(int argc, const char *argv[])
 {
-    server_t server = {0};
-    struct sigaction sigIntHandler;
+    server_t *server = malloc(sizeof(server_t));
+    struct sigaction sigIntHandler = {0};
 
+    if (!server)
+        return EXIT_ERROR;
     sigIntHandler.sa_handler = my_handler;
     sigemptyset(&sigIntHandler.sa_mask);
-    sigIntHandler.sa_flags = 0;
     sigaction(SIGINT, &sigIntHandler, NULL);
     if ((argc != 2 || atoi(argv[1]) < 1024) ||
-        !init_server(&server, atoi(argv[1])))
+        !init_server(server, atoi(argv[1])))
         return EXIT_ERROR;
-    while (!server.shouldStop && !*stop_signal_catched()) {
-        if (update_server(&server) == ERROR) {
-            shutdown_server(&server);
+    while (!server->shouldStop && !*stop_signal_catched()) {
+        if (update_server(server) == ERROR) {
+            shutdown_server(server);
             return EXIT_ERROR;
         }
     }
-    shutdown_server(&server);
+    shutdown_server(server);
     return SUCCESS;
 }
 
