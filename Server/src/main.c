@@ -125,9 +125,9 @@ int main(int argc, const char *argv[])
     /user [“user_uuid”]                                      - YES
     /send [“user_uuid”] [“message_body”]                     - YES
     /messages [“user_uuid”]                                  - YES
-    /subscribe [“team_uuid”]                                 - NO
-    /subscribed ?[“team_uuid”]                               - NO
-    /unsubscribe [“team_uuid”]                               - NO
+    /subscribe [“team_uuid”]                                 - YES
+    /subscribed ?[“team_uuid”]                               - YES
+    /unsubscribe [“team_uuid”]                               - YES
     /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - WIP
     /create                                                  - WIP
     /list                                                    - NO
@@ -139,8 +139,8 @@ int main(int argc, const char *argv[])
     server_event_channel_created         - NO
     server_event_thread_created          - NO
     server_event_reply_created           - NO
-    server_event_user_subscribed         - NO
-    server_event_user_unsubscribed       - NO
+    server_event_user_subscribed         - YES
+    server_event_user_unsubscribed       - YES
     server_event_user_created            - YES
     server_event_user_loaded             - YES
     server_event_user_logged_in          - YES
@@ -176,6 +176,6 @@ int main(int argc, const char *argv[])
     client_print_channel_created                 - NO
     client_print_thread_created                  - NO
     client_print_reply_created                   - NO
-    client_print_subscribed                      - NO
-    client_print_unsubscribed                    - NO
+    client_print_subscribed                      - YES
+    client_print_unsubscribed                    - YES
 */

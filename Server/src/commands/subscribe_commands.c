@@ -8,9 +8,25 @@
 #include "server.h"
 #include "commands.h"
 #include "utils.h"
+#include "logging_server.h"
 
 #include <string.h>
 #include <stdio.h>
+
+static void event_subscribed_unsubscribed(server_t *server, int clientSocket,
+    uuid_t team_uuid, bool subscribed)
+{
+    user_t *user = search_user_by_socket(server, clientSocket);
+    char team_uuid_str[37] = {0};
+    char user_uuid_str[37] = {0};
+
+    uuid_unparse(team_uuid, team_uuid_str);
+    uuid_unparse(user->uuid, user_uuid_str);
+    if (subscribed)
+        server_event_user_subscribed(team_uuid_str, user_uuid_str);
+    else
+        server_event_user_unsubscribed(team_uuid_str, user_uuid_str);
+}
 
 void handle_subscribe_command(server_t *server, int clientSocket,
     char *command)
@@ -34,6 +50,7 @@ void handle_subscribe_command(server_t *server, int clientSocket,
         return send_to_client(server, clientSocket, "508: already "
             "subscribed\n");
     send_to_client(server, clientSocket, "000: execution success\n");
+    event_subscribed_unsubscribed(server, clientSocket, team_uuid, true);
 }
 
 void handle_subscribed_command(server_t *server, int clientSocket,
@@ -65,4 +82,5 @@ void handle_unsubscribe_command(server_t *server, int clientSocket,
         clientSocket)))
         return send_to_client(server, clientSocket, "509: not subscribed\n");
     send_to_client(server, clientSocket, "000: execution success\n");
+    event_subscribed_unsubscribed(server, clientSocket, team_uuid, false);
 }
