@@ -11,18 +11,45 @@
 #include "utils.h"
 
 #include <string.h>
+#include <sys/select.h>
+#include <stdio.h>
 
 static bool parse_create_team_command(char *command, char *teamName,
     char *description)
 {
+    char *tName = NULL;
+    char *tDesc = NULL;
+
     if (strncmp(command, "/create \"", 9) != 0 ||
         command[strlen(command) - 3] != '\"' || strlen(command) < 15) {
         return false;
     }
-    strncpy(teamName, command + 9, strlen(command) - 12);
-    strncpy(description, command + 9 + strlen(teamName) + 3,
-        strlen(command) - 12 - strlen(teamName));
+    tName = strtok(command + 9, "\"");
+    tDesc = command + 10 + strlen(tName) + 1;
+    tDesc = strtok(tDesc, "\"");
+    strcpy(teamName, tName);
+    strcpy(description, tDesc);
     return true;
+}
+
+static void reply_event(server_t *server, int clientSocket, char *team_name,
+    char *team_desc)
+{
+    char team_uuid[37] = {0};
+    char user_uuid[37] = {0};
+
+    uuid_unparse(search_user_by_socket(server, clientSocket)->uuid, user_uuid);
+    uuid_unparse(server->teams[server->teams_count - 1].uuid, team_uuid);
+    send_to_client(server, clientSocket, "107: team created [\"%s\"]\n",
+        team_uuid);
+    server_event_team_created(team_uuid, team_name, user_uuid);
+    for (int i = 0; i < FD_SETSIZE; i++) {
+        if (server->clients[i].socket != 0) {
+            send_to_client(server, server->clients[i].socket,
+            "200: team created [\"%s\"] [\"%s\"] [\"%s\"]\n", team_uuid,
+            team_name, team_desc);
+        }
+    }
 }
 
 static void handle_create_team_command(server_t *server, int clientSocket,
@@ -30,7 +57,6 @@ static void handle_create_team_command(server_t *server, int clientSocket,
 {
     char team_name[MAX_NAME_LENGTH] = {0};
     char description[MAX_DESCRIPTION_LENGTH] = {0};
-    char uuid[37] = {0};
 
     if (!parse_create_team_command(command, team_name, description)) {
         send_to_client(server, clientSocket, "500: invalid syntax\n");
@@ -45,9 +71,7 @@ static void handle_create_team_command(server_t *server, int clientSocket,
     }
     add_user_to_team(&server->teams[server->teams_count - 1],
         search_user_by_socket(server, clientSocket));
-    uuid_unparse(server->teams[server->teams_count - 1].uuid, uuid);
-    send_to_client(server, clientSocket, "107: team created [\"%s\"]\n", uuid);
-    server_event_team_created(uuid, team_name, description);
+    reply_event(server, clientSocket, team_name, description);
 }
 
 void handle_create_command(server_t *server, int clientSocket, char *command)
