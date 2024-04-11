@@ -60,7 +60,7 @@ typedef struct team_s {
     uuid_t uuid;
     char name[MAX_NAME_LENGTH];
     char description[MAX_DESCRIPTION_LENGTH];
-    user_t *users[MAX_USERS];
+    user_t *subscribed_users[MAX_USERS];
     int users_count;
 } team_t;
 
@@ -94,5 +94,6 @@ bool add_message_to_private_discussion(server_t *server, user_t *author,
 team_t *create_team(server_t *server, char *teamName, char *description);
 team_t *search_team_by_name(server_t *server, char *teamName);
 team_t *search_team_by_uuid(server_t *server, uuid_t uuid);
-bool add_user_to_team(team_t *team, user_t *user);
-bool remove_user_from_team(server_t *server, team_t *team, user_t *user);
+bool subscribe_user_to_team(team_t *team, user_t *user);
+bool unsubscribe_user_to_team(server_t *server, team_t *team, user_t *user);
+bool is_user_subscribed_to_team(team_t *team, user_t *user);

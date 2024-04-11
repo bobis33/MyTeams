@@ -11,7 +11,8 @@ SRC =			src/main.c						\
 				src/server_management.c			\
 				src/server_client.c				\
 				src/private_discussion.c		\
-				src/teams.c		\
+				src/teams.c						\
+				src/fuck_le_coding_style.c		\
 \
 				src/commands/log_commands.c					\
 				src/commands/misc_commands.c				\
@@ -19,6 +20,7 @@ SRC =			src/main.c						\
 				src/commands/private_discussion_commands.c	\
 				src/commands/create_command.c				\
 				src/commands/use_command.c					\
+				src/commands/subscribe_commands.c			\
 
 
 OBJ =			$(SRC:.c=.o)

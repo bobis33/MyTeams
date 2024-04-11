@@ -29,9 +29,9 @@ static void (*functions[])(server_t *server, int clientSocket,
     handle_user_command,            // user,
     handle_send_command,            // send,
     handle_messages_command,        // messages,
-    handle_unimplemented_command,   // subscribe,
-    handle_unimplemented_command,   // subscribed,
-    handle_unimplemented_command,   // unsubscribe,
+    handle_subscribe_command,       // subscribe,
+    handle_subscribed_command,      // subscribed,
+    handle_unsubscribe_command,     // unsubscribe,
     handle_use_command,             // use,
     handle_create_command,          // create,
     handle_unimplemented_command,   // list,
@@ -172,7 +172,7 @@ int main(int argc, const char *argv[])
     client_print_team                            - NO
     client_print_channel                         - NO
     client_print_thread                          - NO
-    client_print_team_created                    - NO
+    client_print_team_created                    - YES
     client_print_channel_created                 - NO
     client_print_thread_created                  - NO
     client_print_reply_created                   - NO
