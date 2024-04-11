@@ -69,7 +69,7 @@ static void handle_create_team_command(server_t *server, int clientSocket,
         " name already exists\n");
         return;
     }
-    add_user_to_team(&server->teams[server->teams_count - 1],
+    subscribe_user_to_team(&server->teams[server->teams_count - 1],
         search_user_by_socket(server, clientSocket));
     reply_event(server, clientSocket, team_name, description);
 }

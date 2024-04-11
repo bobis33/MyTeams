@@ -10,6 +10,9 @@ Codes:
         "504: discussion not found"                     (print la string dans stdout)
         "505: a team with this name already exists"     (event: client_error_already_exist)
         "506: context not found"                        (print la string dans stdout)
+        "507: unknown team"                             (event: client_error_unknown_team)
+        "508: already subscribed"                       (print la string dans stdout)
+        "509: not subscribed"                           (print la string dans stdout)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
@@ -131,5 +134,31 @@ Commands:
             server -> client: "500: invalid syntax"                     (print la string dans stdout)
             server -> client: "502: no logged in"                       (event: client_error_unauthorized)
             server -> client: "506: context not found"                  (print la string dans stdout)
+
+            server -> client: "000: execution success"                  (en gros t'es content)
+
+
+    Subscribe:
+        command:
+            client -> server: "/subscribe ["team_uuid"]"
+
+        responses:
+            server -> client: "500: invalid syntax"                     (print la string dans stdout)
+            server -> client: "502: no logged in"                       (event: client_error_unauthorized)
+            server -> client: "507: unknown team"                       (event: client_error_unknown_team)
+            server -> client: "508: already subscribed"                 (print la string dans stdout)
+
+            server -> client: "000: execution success"                  (en gros t'es content)
+
+
+    Unsubscribe:
+        command:
+            client -> server: "/unsubscribe ["team_uuid"]"
+
+        responses:
+            server -> client: "500: invalid syntax"                     (print la string dans stdout)
+            server -> client: "502: no logged in"                       (event: client_error_unauthorized)
+            server -> client: "507: unknown team"                       (event: client_error_unknown_team)
+            server -> client: "509: not subscribed"                     (print la string dans stdout)
 
             server -> client: "000: execution success"                  (en gros t'es content)

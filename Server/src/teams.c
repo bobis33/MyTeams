@@ -40,12 +40,12 @@ team_t *search_team_by_uuid(server_t *server, uuid_t uuid)
     return NULL;
 }
 
-bool add_user_to_team(team_t *team, user_t *user)
+bool subscribe_user_to_team(team_t *team, user_t *user)
 {
     for (int i = 0; i < team->users_count; i++)
-        if (team->users[i] == user)
+        if (team->subscribed_users[i] == user)
             return false;
-    team->users[team->users_count] = user;
+    team->subscribed_users[team->users_count] = user;
     team->users_count++;
     return true;
 }
@@ -56,10 +56,10 @@ static void move_users_down(server_t *server, int index)
         server->teams[i] = server->teams[i + 1];
 }
 
-bool remove_user_from_team(server_t *server, team_t *team, user_t *user)
+bool unsubscribe_user_to_team(server_t *server, team_t *team, user_t *user)
 {
     for (int i = 0; i < team->users_count; i++)
-        if (team->users[i] == user) {
+        if (team->subscribed_users[i] == user) {
             move_users_down(server, i);
             team->users_count--;
             return true;

@@ -32,3 +32,9 @@ void handle_messages_command(server_t *server, int clientSocket,
 // Team commands
 void handle_create_command(server_t *server, int clientSocket, char *command);
 void handle_use_command(server_t *server, int clientSocket, char *command);
+void handle_subscribe_command(server_t *server, int clientSocket,
+    char *command);
+void handle_subscribed_command(server_t *server, int clientSocket,
+    char *command);
+void handle_unsubscribe_command(server_t *server, int clientSocket,
+    char *command);
