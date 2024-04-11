@@ -29,9 +29,18 @@ typedef struct user_s {
     uuid_t uuid;
 } user_t;
 
+typedef enum context_e {
+    NONE = 0,
+    TEAM = 1,
+    CHANNEL = 2,
+    THREAD = 3
+} context_t;
+
 typedef struct client_s {
     int socket;
     user_t *user;
+    uuid_t context_uuid;
+    context_t context;
 } client_t;
 
 typedef struct private_discussion_message_s {
@@ -83,7 +92,7 @@ bool add_message_to_private_discussion(server_t *server, user_t *author,
     user_t *receiver, char *message);
 
 team_t *create_team(server_t *server, char *teamName, char *description);
-team_t *get_team_by_name(server_t *server, char *teamName);
-team_t *get_team_by_uuid(server_t *server, uuid_t uuid);
+team_t *search_team_by_name(server_t *server, char *teamName);
+team_t *search_team_by_uuid(server_t *server, uuid_t uuid);
 bool add_user_to_team(team_t *team, user_t *user);
 bool remove_user_from_team(server_t *server, team_t *team, user_t *user);

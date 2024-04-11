@@ -9,6 +9,7 @@ Codes:
         "503: unknown user"                             (event: client_error_unknown_user)
         "504: discussion not found"                     (print la string dans stdout)
         "505: a team with this name already exists"     (event: client_error_already_exist)
+        "506: context not found"                        (print la string dans stdout)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
@@ -20,85 +21,115 @@ Codes:
         "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]                                (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
         "107: team created ["team uuid"]"                                                                                       (event: client_print_team_created)
 
+    Server events related:
+        "200: team created ["team uuid"] ["team name"] ["team desc"]"                                                           (event: client_event_team_created)
+
+
 Commands:
 
     Help:
-        client -> server: "/help"
+        command:
+            client -> server: "/help"
 
         responses:
-        server -> client: "500: invalid syntax"         (print la string dans stdout)
-        server -> client: "105: ["Help message"]        (juste print le help message)
+            server -> client: "500: invalid syntax"         (print la string dans stdout)
+            server -> client: "105: ["Help message"]        (juste print le help message)
 
 
     Login:
-        client -> server: "/login ["username"]"
+        command:
+            client -> server: "/login ["username"]"
 
         reponses:
-        server -> client: "500: invalid syntax"                         (print la string dans stdout)
-        server -> client: "100: successfully logged in ["uuid"]"        (event: client_event_logged_in)
+            server -> client: "500: invalid syntax"                         (print la string dans stdout)
+            server -> client: "100: successfully logged in ["uuid"]"        (event: client_event_logged_in)
 
 
     Logout:
-        client -> server: "/logout"
+        command:
+            client -> server: "/logout"
 
         reponses:
-        server -> client: "500: invalid syntax"                         (print la string dans stdout)
-        server -> client: "502: no logged in"                           (event: client_error_unauthorized)
-        server -> client: "101: successfully logged out ["uuid"]"       (event: client_event_logged_out)
+            server -> client: "500: invalid syntax"                         (print la string dans stdout)
+            server -> client: "502: no logged in"                           (event: client_error_unauthorized)
+            server -> client: "101: successfully logged out ["uuid"]"       (event: client_event_logged_out)
 
 
     Users:
-        client -> server: "/users"
+        command:
+            client -> server: "/users"
 
         reponses:
-        server -> client: "500: invalid syntax"                                                                                                     (print la string dans stdout)
-        server -> client: "502: no logged in"                                                                                                       (event: client_error_unauthorized)
-        server -> client: "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]]\n * user count]"       (event: client_print_users, faut l'appeler pour chaque user de la liste)
+            server -> client: "500: invalid syntax"                                                                                                     (print la string dans stdout)
+            server -> client: "502: no logged in"                                                                                                       (event: client_error_unauthorized)
+            server -> client: "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]]\n * user count]"       (event: client_print_users, faut l'appeler pour chaque user de la liste)
 
 
     User:
-        client -> server: "/user ["uuid"]"
+        command:
+            client -> server: "/user ["uuid"]"
 
         responses:
-        server -> client: "500: invalid syntax"                                                                                     (print la string dans stdout)
-        server -> client: "502: no logged in"                                                                                       (event: client_error_unauthorized)
-        server -> client: "503: unknown user"                                                                                       (event: client_error_unknown_user)
-        server -> client: "103: user details ["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]"       (event: client_print_user)
+            server -> client: "500: invalid syntax"                                                                                     (print la string dans stdout)
+            server -> client: "502: no logged in"                                                                                       (event: client_error_unauthorized)
+            server -> client: "503: unknown user"                                                                                       (event: client_error_unknown_user)
+            server -> client: "103: user details ["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]"       (event: client_print_user)
 
 
     Send:
-        sender -> server: "/send ["receiver uuid"] ["message body"]"
+        command:
+            sender -> server: "/send ["receiver uuid"] ["message body"]"
 
         responses:
-        server -> sender: "500: invalid syntax"                                                 (print la string dans stdout)
-        server -> sender: "502: no logged in"                                                   (event: client_error_unauthorized)
-        server -> sender: "503: unknown user"                                                   (event: client_error_unknown_user)
-        server -> sender: "000: execution success"                                              (en gros t'es content)
+            server -> sender: "500: invalid syntax"                                                 (print la string dans stdout)
+            server -> sender: "502: no logged in"                                                   (event: client_error_unauthorized)
+            server -> sender: "503: unknown user"                                                   (event: client_error_unknown_user)
+            server -> sender: "000: execution success"                                              (en gros t'es content)
 
-        server -> receiver : "104: message received ["sender uuid"] ["message body"]"           (event: client_event_private_message_received)
+            server -> receiver : "104: message received ["sender uuid"] ["message body"]"           (event: client_event_private_message_received)
 
 
     Messages:
-        client -> server: "/messages ["user uuid"]"
+        command:
+            client -> server: "/messages ["user uuid"]"
 
         responses:
-        server -> client: "500: invalid syntax"                                                                         (print la string dans stdout)
-        server -> client: "502: no logged in"                                                                           (event: client_error_unauthorized)
-        server -> client: "503: unknown user"                                                                           (event: client_error_unknown_user)
-        server -> client: "504: discussion not found"                                                                   (print la string dans stdout)
+            server -> client: "500: invalid syntax"                                                                         (print la string dans stdout)
+            server -> client: "502: no logged in"                                                                           (event: client_error_unauthorized)
+            server -> client: "503: unknown user"                                                                           (event: client_error_unknown_user)
+            server -> client: "504: discussion not found"                                                                   (print la string dans stdout)
 
-        server -> client: "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]      (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
+            server -> client: "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]      (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
 
 
-    Messages: (seule la création de team est implémentée)
-        client -> server: "/create ["team_name"] ["team_description"]"              (create a team)
-        client -> server: "/create ["channel_name"] ["channel_description"]"        (create a channel in a team)
-        client -> server: "/create ["thread_title"] ["thread_message"]"             (create a thread in a channel)
-        client -> server: "/create ["comment_body"]"                                (create a reply in a thread)
+    Create: (seule la création de team est implémentée)
+        command:
+            client -> server: "/create ["team_name"] ["team_description"]"              (create a team)
+            client -> server: "/create ["channel_name"] ["channel_description"]"        (create a channel in a team)
+            client -> server: "/create ["thread_title"] ["thread_message"]"             (create a thread in a channel)
+            client -> server: "/create ["comment_body"]"                                (create a reply in a thread)
 
         reponses:
-        server -> client: "500: invalid syntax"                             (print la string dans stdout)
-        server -> client: "502: no logged in"                               (event: client_error_unauthorized)
-        server -> client: "505: a team with this name already exists"       (event: client_error_already_exist)
+            server -> client: "500: invalid syntax"                                                     (print la string dans stdout)
+            server -> client: "502: no logged in"                                                       (event: client_error_unauthorized)
+            server -> client: "505: a team with this name already exists"                               (event: client_error_already_exist)
 
-        server -> client: "107: team created ["team uuid"]"                 (event: client_print_team_created)
+            server -> client: "107: team created ["team uuid"]"                                         (event: client_print_team_created)
+
+        events:
+            server -> all client: "200: team created ["team uuid"] ["team name"] ["team desc"]"         (event: client_event_team_created)
+
+
+    Use: (seul les deux premières sont implémentées)
+        command:
+            client -> server: "/use"
+            client -> server: "/use ["team_uuid"]"
+            client -> server: "/use ["team_uuid"] ["channel_uuid"]"
+            client -> server: "/use ["team_uuid"] ["channel_uuid"] ["thread_uuid"]"
+
+        responses:
+            server -> client: "500: invalid syntax"                     (print la string dans stdout)
+            server -> client: "502: no logged in"                       (event: client_error_unauthorized)
+            server -> client: "506: context not found"                  (print la string dans stdout)
+
+            server -> client: "000: execution success"                  (en gros t'es content)

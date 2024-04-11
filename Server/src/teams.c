@@ -14,7 +14,7 @@ team_t *create_team(server_t *server, char *teamName, char *description)
 {
     team_t team = {0};
 
-    if (get_team_by_name(server, teamName) != NULL)
+    if (search_team_by_name(server, teamName) != NULL)
         return NULL;
     uuid_generate(team.uuid);
     memcpy(team.name, teamName, strlen(teamName));
@@ -24,7 +24,7 @@ team_t *create_team(server_t *server, char *teamName, char *description)
     return &server->teams[server->teams_count - 1];
 }
 
-team_t *get_team_by_name(server_t *server, char *teamName)
+team_t *search_team_by_name(server_t *server, char *teamName)
 {
     for (int i = 0; i < server->teams_count; i++)
         if (strcmp(server->teams[i].name, teamName) == 0)
@@ -32,7 +32,7 @@ team_t *get_team_by_name(server_t *server, char *teamName)
     return NULL;
 }
 
-team_t *get_team_by_uuid(server_t *server, uuid_t uuid)
+team_t *search_team_by_uuid(server_t *server, uuid_t uuid)
 {
     for (int i = 0; i < server->teams_count; i++)
         if (uuid_compare(server->teams[i].uuid, uuid) == 0)
