@@ -16,7 +16,7 @@
 
 static const char *commands[] = {
     "/help", "/login", "/logout", "/users", "/user", "/send",
-    "/messages", "/subscribe", "/subscribed", "/unsubscribe",
+    "/messages", "/subscribed", "/subscribe", "/unsubscribe",
     "/use", "/create", "/list", "/info", "/stop"
 };
 
@@ -29,8 +29,8 @@ static void (*functions[])(server_t *server, int clientSocket,
     handle_user_command,            // user,
     handle_send_command,            // send,
     handle_messages_command,        // messages,
-    handle_subscribe_command,       // subscribe,
     handle_subscribed_command,      // subscribed,
+    handle_subscribe_command,       // subscribe,
     handle_unsubscribe_command,     // unsubscribe,
     handle_use_command,             // use,
     handle_create_command,          // create,
@@ -125,9 +125,9 @@ int main(int argc, const char *argv[])
     /user [“user_uuid”]                                      - YES
     /send [“user_uuid”] [“message_body”]                     - YES
     /messages [“user_uuid”]                                  - YES
-    /subscribe [“team_uuid”]                                 - NO
-    /subscribed ?[“team_uuid”]                               - NO
-    /unsubscribe [“team_uuid”]                               - NO
+    /subscribe [“team_uuid”]                                 - YES
+    /subscribed ?[“team_uuid”]                               - YES
+    /unsubscribe [“team_uuid”]                               - YES
     /use ?[“team_uuid”] ?[“channel_uuid”] ?[“thread_uuid”]   - WIP
     /create                                                  - WIP
     /list                                                    - NO
@@ -139,8 +139,8 @@ int main(int argc, const char *argv[])
     server_event_channel_created         - NO
     server_event_thread_created          - NO
     server_event_reply_created           - NO
-    server_event_user_subscribed         - NO
-    server_event_user_unsubscribed       - NO
+    server_event_user_subscribed         - YES
+    server_event_user_unsubscribed       - YES
     server_event_user_created            - YES
     server_event_user_loaded             - YES
     server_event_user_logged_in          - YES
@@ -149,33 +149,33 @@ int main(int argc, const char *argv[])
 */
 
 /* Client log events:
-    client_event_logged_in                       - YES
-    client_event_logged_out                      - YES
+    client_event_logged_in                       - YES (TODO: event)
+    client_event_logged_out                      - YES (TODO: event)
     client_event_private_message_received        - YES
     client_event_thread_reply_received           - NO
     client_event_team_created                    - YES
     client_event_channel_created                 - NO
     client_event_thread_created                  - NO
     client_print_users                           - YES
-    client_print_teams                           - NO
+    client_print_teams                           - YES
     client_team_print_channels                   - NO
     client_channel_print_threads                 - NO
     client_thread_print_replies                  - NO
     client_private_message_print_messages        - YES
-    client_error_unknown_team                    - NO
+    client_error_unknown_team                    - YES
     client_error_unknown_channel                 - NO
     client_error_unknown_thread                  - NO
     client_error_unknown_user                    - YES
     client_error_unauthorized                    - YES
     client_error_already_exist                   - YES
     client_print_user                            - YES
-    client_print_team                            - NO
+    client_print_team                            - YES
     client_print_channel                         - NO
     client_print_thread                          - NO
     client_print_team_created                    - YES
     client_print_channel_created                 - NO
     client_print_thread_created                  - NO
     client_print_reply_created                   - NO
-    client_print_subscribed                      - NO
-    client_print_unsubscribed                    - NO
+    client_print_subscribed                      - YES
+    client_print_unsubscribed                    - YES
 */
