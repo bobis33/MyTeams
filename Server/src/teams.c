@@ -19,6 +19,7 @@ team_t *create_team(server_t *server, char *teamName, char *description)
     uuid_generate(team.uuid);
     memcpy(team.name, teamName, strlen(teamName));
     memcpy(team.description, description, strlen(description));
+    team.users_count = 0;
     server->teams[server->teams_count] = team;
     server->teams_count++;
     return &server->teams[server->teams_count - 1];

@@ -13,6 +13,7 @@ Codes:
         "507: unknown team"                             (event: client_error_unknown_team)
         "508: already subscribed"                       (print la string dans stdout)
         "509: not subscribed"                           (print la string dans stdout)
+        "510: not subscribed"                           (event: client_error_unauthorized)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
@@ -23,6 +24,7 @@ Codes:
         "105: ["Help message"]                                                                                                  (juste print le help message)
         "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]                                (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
         "107: team created ["team uuid"]"                                                                                       (event: client_print_team_created)
+        "108: team list [[["team name"] ["team uuid"] ["team description]]\n * team count]"                                     (event: client_print_teams, faut l'appeler pour chaque team de la liste)
 
     Server events related:
         "200: team created ["team uuid"] ["team name"] ["team desc"]"                                                           (event: client_event_team_created)
@@ -162,3 +164,18 @@ Commands:
             server -> client: "509: not subscribed"                     (print la string dans stdout)
 
             server -> client: "000: execution success"                  (en gros t'es content)
+
+
+    Subscribed:
+        command:
+            client -> server: "/subscribed"
+            client -> server: "/subscribed ["team_uuid"]"
+
+        responses:
+            server -> client: "500: invalid syntax"                                                                                                     (print la string dans stdout)
+            server -> client: "502: no logged in"                                                                                                       (event: client_error_unauthorized)
+            server -> client: "507: unknown team"                                                                                                       (event: client_error_unknown_team)
+            server -> client: "510: not subscribed"                                                                                                     (event: client_error_unauthorized)
+
+            server -> client: "102: user list [[["user name"] ["user uuid"] ["user status" (0 = not connected / 1 = connected)]] * user count]"         (event: client_print_users, faut l'appeler pour chaque user de la liste)
+            server -> client: "108: team list [[["team name"] ["team uuid"] ["team description]]\n * team count]"                                       (event: client_print_teams, faut l'appeler pour chaque team de la liste)
