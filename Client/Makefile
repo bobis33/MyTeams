@@ -24,6 +24,7 @@ RM =			rm -f
 
 $(NAME):		$(OBJ)
 				gcc -o $(NAME) $(OBJ) $(CFLAGS)
+				mv $(NAME) ../
 
 all:			$(NAME)
 
