@@ -15,14 +15,9 @@
 #define ERROR -1
 #define EXIT_ERROR 84
 
-#define MAX_USERS 1024
-
 #define MAX_NAME_LENGTH 32
 #define MAX_DESCRIPTION_LENGTH 255
 #define MAX_BODY_LENGTH 512
-
-#define MAX_PRIVATE_DISCUSSIONS 255
-#define MAX_PRIVATE_DISCUSSION_MESSAGES 1024
 
 typedef struct user_s {
     char name[MAX_NAME_LENGTH];
@@ -49,6 +44,7 @@ typedef struct private_discussion_message_s {
     time_t timestamp;
 } private_discussion_message_t;
 
+#define MAX_PRIVATE_DISCUSSION_MESSAGES 200
 typedef struct private_discussion_s {
     user_t *user1;
     user_t *user2;
@@ -56,12 +52,20 @@ typedef struct private_discussion_s {
     int messages_count;
 } private_discussion_t;
 
+typedef struct channel_s {
+    uuid_t uuid;
+    char name[MAX_NAME_LENGTH];
+    char description[MAX_DESCRIPTION_LENGTH];
+} channel_t;
+
 typedef struct team_s {
     uuid_t uuid;
     char name[MAX_NAME_LENGTH];
     char description[MAX_DESCRIPTION_LENGTH];
-    user_t *subscribed_users[MAX_USERS];
+    user_t *subscribed_users[50];
     int users_count;
+    channel_t channels[20];
+    int channels_count;
 } team_t;
 
 typedef struct server_s {
@@ -69,11 +73,11 @@ typedef struct server_s {
     bool shouldStop;
     client_t clients[FD_SETSIZE];
     fd_set readFds;
-    user_t users[MAX_USERS];
+    user_t users[100];
     int usersCount;
-    private_discussion_t private_discussions[MAX_PRIVATE_DISCUSSIONS];
+    private_discussion_t private_discussions[200];
     int private_discussions_count;
-    team_t teams[MAX_USERS];
+    team_t teams[50];
     int teams_count;
 } server_t;
 
@@ -97,3 +101,7 @@ team_t *search_team_by_uuid(server_t *server, uuid_t uuid);
 bool subscribe_user_to_team(team_t *team, user_t *user);
 bool unsubscribe_user_to_team(server_t *server, team_t *team, user_t *user);
 bool is_user_subscribed_to_team(team_t *team, user_t *user);
+
+channel_t *create_channel(team_t *team, char *channelName, char *description);
+channel_t *search_channel_by_name(team_t *team, char *channelName);
+channel_t *search_channel_by_uuid(server_t *server, uuid_t uuid);

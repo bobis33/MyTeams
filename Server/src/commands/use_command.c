@@ -32,6 +32,7 @@ static bool update_context(server_t *server, int clientSocket,
     return false;
 }
 
+// TODO: check if the user is subscribed to the team
 void handle_use_command(server_t *server, int clientSocket, char *command)
 {
     if (strncmp(command, "/use\n", strlen("/use\n")) == 0) {

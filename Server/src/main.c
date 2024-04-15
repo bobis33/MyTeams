@@ -136,7 +136,7 @@ int main(int argc, const char *argv[])
 
 /* Server log events:
     server_event_team_created            - YES
-    server_event_channel_created         - NO
+    server_event_channel_created         - YES
     server_event_thread_created          - NO
     server_event_reply_created           - NO
     server_event_user_subscribed         - YES
@@ -154,7 +154,7 @@ int main(int argc, const char *argv[])
     client_event_private_message_received        - YES
     client_event_thread_reply_received           - NO
     client_event_team_created                    - YES
-    client_event_channel_created                 - NO
+    client_event_channel_created                 - YES
     client_event_thread_created                  - NO
     client_print_users                           - YES
     client_print_teams                           - YES
@@ -173,7 +173,7 @@ int main(int argc, const char *argv[])
     client_print_channel                         - NO
     client_print_thread                          - NO
     client_print_team_created                    - YES
-    client_print_channel_created                 - NO
+    client_print_channel_created                 - YES
     client_print_thread_created                  - NO
     client_print_reply_created                   - NO
     client_print_subscribed                      - YES
