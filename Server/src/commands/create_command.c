@@ -134,12 +134,39 @@ static void handle_create_channel_command(server_t *server, int clientSocket,
         channel_uuid);
 }
 
+static bool parse_create_thread_command(char *command, char *thread_title,
+    char *thread_body)
+{
+    char *title = NULL;
+    char *body = NULL;
+
+    if (strncmp(command, "/create \"", 9) != 0 ||
+        command[strlen(command) - 3] != '\"' || strlen(command) < 15) {
+        return false;
+    }
+    title = strtok(command + 9, "\"");
+    body = command + 10 + strlen(title) + 1;
+    body = strtok(body, "\"");
+    strcpy(thread_title, title);
+    strcpy(thread_body, body);
+    return true;
+}
+
+// TODO: use multiple context uuids
 static void handle_create_thread_command(server_t *server, int clientSocket,
     char *command)
 {
-    (void) server;
-    (void) clientSocket;
-    (void) command;
+    char thread_title[MAX_NAME_LENGTH] = {0};
+    char body[MAX_BODY_LENGTH] = {0};
+
+    if (!parse_create_thread_command(command, thread_title, body)) {
+        send_to_client(server, clientSocket, "500: invalid syntax\n");
+        return;
+    }
+    if (!check_user_connection(server, clientSocket))
+        return;
+    send_to_client(server, clientSocket, "thread title: %s\nbody: %s\n",
+        thread_title, body);
 }
 
 static void handle_create_reply_command(server_t *server, int clientSocket,

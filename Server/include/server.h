@@ -52,10 +52,20 @@ typedef struct private_discussion_s {
     int messages_count;
 } private_discussion_t;
 
+typedef struct thread_s {
+    uuid_t uuid;
+    char title[MAX_NAME_LENGTH];
+    char body[MAX_BODY_LENGTH];
+    user_t *author;
+    time_t timestamp;
+} thread_t;
+
 typedef struct channel_s {
     uuid_t uuid;
     char name[MAX_NAME_LENGTH];
     char description[MAX_DESCRIPTION_LENGTH];
+    thread_t threads[50];
+    int threads_count;
 } channel_t;
 
 typedef struct team_s {
@@ -105,3 +115,8 @@ bool is_user_subscribed_to_team(team_t *team, user_t *user);
 channel_t *create_channel(team_t *team, char *channelName, char *description);
 channel_t *search_channel_by_name(team_t *team, char *channelName);
 channel_t *search_channel_by_uuid(server_t *server, uuid_t uuid);
+
+thread_t *create_thread(channel_t *channel, char *title, char *body,
+    user_t *author);
+thread_t *search_thread_by_uuid(channel_t *channel, uuid_t uuid);
+thread_t *search_thread_by_title(channel_t *channel, char *title);
