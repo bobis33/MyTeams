@@ -10,7 +10,7 @@
 
 #include "client.h"
 
-int parse_args(const char *ip, const char *port, struct client *client)
+int parse_args(const char *ip, const char *port, client_t *client)
 {
     int inet_pton_return = 0;
     int converted_port = atoi(port);

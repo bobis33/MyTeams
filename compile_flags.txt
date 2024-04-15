@@ -1,3 +1,1 @@
--I./Server/include
--I./Client/include
 -I./libs/myteams

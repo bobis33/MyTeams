@@ -13,18 +13,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "logging_client.h"
+
 #define SUCCESS 0
 #define ERROR -1
 #define EPITECH_ERROR 84
 
 #define MAX_CHAR_SIZE 1024
 
-struct client {
+typedef struct client_s {
     uint16_t port;
     char *ip;
     int sockfd;
     struct sockaddr_in socket_address;
-};
+} client_t;
 
-int parse_args(const char *ip, const char *port, struct client *client);
-int run_client(struct client *client);
+int parse_args(const char *ip, const char *port, client_t *client);
+
+int run_client(client_t *client);

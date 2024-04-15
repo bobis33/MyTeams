@@ -5,39 +5,78 @@
 ** client.c
 */
 
+#include <stdio.h>
 #include <string.h>
 
 #include "client.h"
+#include "commands.h"
 
-static int handle_input(int file_descriptor)
+
+static const char *commands[] = {
+    "/help", "/login", "/logout", "/users", "/user", "/send",
+    "/messages", "/subscribe", "/subscribed", "/unsubscribe",
+    "/use", "/create", "/list", "/info", "/stop"
+};
+
+static void (*functions[])(client_t *client, char *request, char *response) = {
+    handle_help_command,
+    handle_login_command,
+    handle_logout_command
+};
+
+static char *get_request(void)
 {
-    char buffer[MAX_CHAR_SIZE] = {0};
-    char request[MAX_CHAR_SIZE] = {0};
-
+    char *request = malloc(sizeof(char) * MAX_CHAR_SIZE);
     if (read(0, request, MAX_CHAR_SIZE) < 0) {
         perror("read");
-        return ERROR;
+        return NULL;
     }
+    return request;
+}
+
+static char *get_response(int file_descriptor, char *request)
+{
+    char *buffer = malloc(sizeof(char) * MAX_CHAR_SIZE);
     request[strcspn(request, "\0")] = '\n';
     if (write(file_descriptor, request, strlen(request)) < 0) {
         perror("write");
-        return ERROR;
+        return NULL;
     }
     if (read(file_descriptor, buffer, MAX_CHAR_SIZE) < 0){
         perror("read");
-        return ERROR;
+        return NULL;
     }
     buffer[strlen(buffer)] = '\0';
-    write(1, buffer, strlen(buffer));
+    return buffer;
+}
+
+static int parse_request(char *request, char *response)
+{
+    char *token = strtok(request, " ");
+    if (token != NULL) {
+        for (int i = 0; i < 3; i++) {
+            if (strncmp(token, commands[i], strlen(commands[i])) == 0) {
+                functions[i](NULL, request, response);
+            }
+        }
+    }
     return SUCCESS;
 }
 
-static int client_loop(struct client *client)
+static int client_loop(client_t *client)
 {
+    char *request = NULL;
+    char *response = NULL;
     while (1) {
-        if (handle_input(client->sockfd) == ERROR) {
+        request = get_request();
+        if (!request)
             return ERROR;
-        }
+        response = get_response(client->sockfd, request);
+        if (!response)
+            return ERROR;
+        printf("%s", response);
+        if (parse_request(request, response) == ERROR)
+            return ERROR;
     }
     close(client->sockfd);
     free(client->ip);
@@ -45,7 +84,7 @@ static int client_loop(struct client *client)
     return SUCCESS;
 }
 
-int run_client(struct client *client)
+int run_client(client_t *client)
 {
     client->sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (client->sockfd < 0) {

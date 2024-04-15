@@ -18,7 +18,7 @@ static void print_help(void)
 
 int main(int argc, const char *argv[])
 {
-    struct client *client = malloc(sizeof(struct client));
+    client_t *client = malloc(sizeof(client_t));
 
     if (argc == 2 && strcmp(argv[1], "-help") == 0) {
         print_help();
