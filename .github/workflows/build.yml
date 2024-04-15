@@ -1,0 +1,91 @@
+name: myTeams CI
+run-name: ${{github.actor}} myTeams CI
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - "**"
+
+env:
+  EXECUTABLES: "myteams_cli,myteams_server"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+        image: epitechcontent/epitest-docker:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Check compilation
+        run: make re
+
+      - name: Check executables
+        run: |
+          IFS=',' read -ra ADDR <<< $EXECUTABLES
+          for executable in "${ADDR[@]}"; do
+            if [[ ! -x "${executable}" ]]; then
+              echo "Error: Executable $executable not found."
+              exit 1
+            fi
+          done
+
+      - name: clean repository
+        run: make fclean
+
+  coding_style_client:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container: ghcr.io/epitech/coding-style-checker:latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@master
+
+      - name: run coding-style
+        run: check.sh ./Client/src /tmp
+
+      - name: display coding-style errors
+        run: |
+          input=/tmp/coding-style-reports.log
+          while IFS= read -r -a line; do
+            fields=($(printf "%s" "$line"|cut -d':' --output-delimiter=' ' -f1-))
+            echo "::error title=${fields[2]} coding style error,file=${fields[0]},line=${fields[1]}::${fields[3]}"
+          done < $input || true
+
+      - name: count coding-style errors
+        run: |
+          NB_ERROR=$(cat /tmp/coding-style-reports.log | wc -l)
+          if [ $NB_ERROR -gt 0 ]; then
+            exit 1
+          fi
+
+  coding_style_server:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    container: ghcr.io/epitech/coding-style-checker:latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@master
+
+      - name: run coding-style
+        run: check.sh ./Client/src /tmp
+
+      - name: display coding-style errors
+        run: |
+          input=/tmp/coding-style-reports.log
+          while IFS= read -r -a line; do
+            fields=($(printf "%s" "$line"|cut -d':' --output-delimiter=' ' -f1-))
+            echo "::error title=${fields[2]} coding style error,file=${fields[0]},line=${fields[1]}::${fields[3]}"
+          done < $input || true
+
+      - name: count coding-style errors
+        run: |
+          NB_ERROR=$(cat /tmp/coding-style-reports.log | wc -l)
+          if [ $NB_ERROR -gt 0 ]; then
+            exit 1
+          fi
