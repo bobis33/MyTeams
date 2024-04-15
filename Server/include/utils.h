@@ -16,3 +16,4 @@ user_t *search_user_by_socket(server_t *server, int clientSocket);
 user_t *search_user_by_uuid(server_t *server, uuid_t uuid);
 bool check_user_connection(server_t *server, int clientSocket);
 int search_user_client_socket(server_t *server, user_t *user);
+bool is_user_connected(server_t *server, uuid_t user_uuid);

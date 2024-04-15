@@ -16,3 +16,14 @@ bool is_user_subscribed_to_team(team_t *team, user_t *user)
             return true;
     return false;
 }
+
+bool is_user_connected(server_t *server, uuid_t user_uuid)
+{
+    for (int i = 0; i < FD_SETSIZE; i++) {
+        if (server->clients[i].user != NULL &&
+            uuid_compare(server->clients[i].user->uuid, user_uuid) == 0) {
+            return true;
+        }
+    }
+    return false;
+}

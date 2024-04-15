@@ -54,19 +54,56 @@ void handle_subscribe_command(server_t *server, int clientSocket,
     event_subscribed_unsubscribed(server, clientSocket, team_uuid, true);
 }
 
+static void get_team_users(server_t *server, team_t *team, char *user_list)
+{
+    char user_uuid_str[37] = {0};
+
+    strcat(user_list, "102: user list [");
+    for (int i = 0; i < team->users_count; i++) {
+        uuid_unparse(team->subscribed_users[i]->uuid, user_uuid_str);
+        strcat(user_list, "[\"");
+        strcat(user_list, team->subscribed_users[i]->name);
+        strcat(user_list, "\"] [\"");
+        strcat(user_list, user_uuid_str);
+        strcat(user_list, "\"] [\"");
+        strcat(user_list, is_user_connected(server,
+            team->subscribed_users[i]->uuid) ? "1" : "0");
+        strcat(user_list, "\"]]\n");
+    }
+    strcat(user_list, "]\n");
+}
+
 static void reply_team_users(server_t *server, int clientSocket, team_t *team)
 {
+    char user_list[4096] = {0};
+
     if (team == NULL)
         return send_to_client(server, clientSocket, "507: Unknown team\n");
     if (!is_user_subscribed_to_team(team, search_user_by_socket(server,
         clientSocket)))
         return send_to_client(server, clientSocket, "510: not subscribed\n");
-    return send_to_client(server, clientSocket, "user list\n");
+    get_team_users(server, team, user_list);
+    send_to_client(server, clientSocket, "%s", user_list);
 }
 
 static void reply_team_list(server_t *server, int clientSocket)
 {
-    return send_to_client(server, clientSocket, "team list\n");
+    char team_list[4096] = {0};
+    char team_uuid_str[37] = {0};
+
+    strcat(team_list, "108: team list [");
+    for (int i = 0; i < server->teams_count; i++) {
+        uuid_unparse(server->teams[i].uuid, team_uuid_str);
+        strcat(team_list, "[\"");
+        strcat(team_list, server->teams[i].name);
+        strcat(team_list, "\"] [\"");
+        strcat(team_list, team_uuid_str);
+        strcat(team_list, "\"] [\"");
+        strcat(team_list, server->teams[i].description);
+        strcat(team_list, "\"]]\n");
+    }
+    strcat(team_list, "]\n");
+    send_to_client(server, clientSocket, "%s", team_list);
 }
 
 void handle_subscribed_command(server_t *server, int clientSocket,
