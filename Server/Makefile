@@ -49,7 +49,7 @@ clean:
 				$(RM) $(OBJ)
 
 fclean:			clean
-				$(RM) $(NAME)
+				$(RM) ../$(NAME)
 				find . -name "*.gcda" -delete -or -name "*.gcno" -delete
 				find . -name "*.log" -delete
 

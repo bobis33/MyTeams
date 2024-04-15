@@ -13,17 +13,6 @@
 #include <string.h>
 #include <sys/select.h>
 
-static bool is_user_connected(server_t *server, uuid_t user_uuid)
-{
-    for (int i = 0; i < FD_SETSIZE; i++) {
-        if (server->clients[i].user != NULL &&
-            uuid_compare(server->clients[i].user->uuid, user_uuid) == 0) {
-            return true;
-        }
-    }
-    return false;
-}
-
 void handle_users_command(server_t *server, int clientSocket, char *command)
 {
     char buffer[1024] = {0};
