@@ -13,6 +13,7 @@ SRC =			src/main.c						\
 				src/private_discussion.c		\
 				src/teams.c						\
 				src/fuck_le_coding_style.c		\
+				src/channel.c					\
 \
 				src/commands/log_commands.c					\
 				src/commands/misc_commands.c				\

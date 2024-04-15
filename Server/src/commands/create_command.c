@@ -32,8 +32,8 @@ static bool parse_create_team_command(char *command, char *teamName,
     return true;
 }
 
-static void reply_event(server_t *server, int clientSocket, char *team_name,
-    char *team_desc)
+static void reply_team_event(server_t *server, int clientSocket,
+    char *team_name, char *team_desc)
 {
     char team_uuid[37] = {0};
     char user_uuid[37] = {0};
@@ -69,11 +69,96 @@ static void handle_create_team_command(server_t *server, int clientSocket,
         " name already exists\n");
         return;
     }
-    reply_event(server, clientSocket, team_name, description);
+    reply_team_event(server, clientSocket, team_name, description);
+}
+
+static bool parse_create_channel_command(char *command, char *channelName,
+    char *description)
+{
+    char *cName = NULL;
+    char *cDesc = NULL;
+
+    if (strncmp(command, "/create \"", 9) != 0 ||
+        command[strlen(command) - 3] != '\"' || strlen(command) < 15) {
+        return false;
+    }
+    cName = strtok(command + 9, "\"");
+    cDesc = command + 10 + strlen(cName) + 1;
+    cDesc = strtok(cDesc, "\"");
+    strcpy(channelName, cName);
+    strcpy(description, cDesc);
+    return true;
+}
+
+static void reply_channel_event(server_t *server, team_t *team,
+    char *channel_name, char *channel_desc)
+{
+    char channel_uuid[37] = {0};
+    char team_uuid[37] = {0};
+
+    uuid_unparse(search_team_by_uuid(server, team->uuid)->uuid, team_uuid);
+    uuid_unparse(team->channels[team->channels_count - 1].uuid, channel_uuid);
+    server_event_channel_created(team_uuid, channel_uuid, channel_name);
+    for (int i = 0; i < FD_SETSIZE; i++) {
+        if (server->clients[i].socket != 0 && is_user_subscribed_to_team(team,
+            search_user_by_socket(server, i))) {
+            send_to_client(server, server->clients[i].socket,
+            "201: channel created [\"%s\"] [\"%s\"] [\"%s\"]\n", channel_uuid,
+            channel_name, channel_desc);
+        }
+    }
+}
+
+static void handle_create_channel_command(server_t *server, int clientSocket,
+    char *command)
+{
+    char channel_name[MAX_NAME_LENGTH] = {0};
+    char description[MAX_DESCRIPTION_LENGTH] = {0};
+    team_t *team = NULL;
+    char channel_uuid[37] = {0};
+
+    if (!parse_create_channel_command(command, channel_name, description)) {
+        send_to_client(server, clientSocket, "500: invalid syntax\n");
+        return;
+    }
+    if (!check_user_connection(server, clientSocket))
+        return;
+    team = search_team_by_uuid(server,
+        server->clients[clientSocket].context_uuid);
+    if (create_channel(team, channel_name, description) == NULL)
+        return send_to_client(server, clientSocket, "511: a channel with this"
+            " name already exists");
+    reply_channel_event(server, team, channel_name, description);
+    uuid_unparse(team->channels[team->channels_count - 1].uuid, channel_uuid);
+    send_to_client(server, clientSocket, "109: channel created [\"%s\"]\n",
+        channel_uuid);
+}
+
+static void handle_create_thread_command(server_t *server, int clientSocket,
+    char *command)
+{
+    (void) server;
+    (void) clientSocket;
+    (void) command;
+}
+
+static void handle_create_reply_command(server_t *server, int clientSocket,
+    char *command)
+{
+    (void) server;
+    (void) clientSocket;
+    (void) command;
 }
 
 void handle_create_command(server_t *server, int clientSocket, char *command)
 {
-    if (true)
-        handle_create_team_command(server, clientSocket, command);
+    if (server->clients[clientSocket].context == NONE)
+        return handle_create_team_command(server, clientSocket, command);
+    if (server->clients[clientSocket].context == TEAM)
+        return handle_create_channel_command(server, clientSocket, command);
+    if (server->clients[clientSocket].context == CHANNEL)
+        return handle_create_thread_command(server, clientSocket, command);
+    if (server->clients[clientSocket].context == THREAD)
+        return handle_create_reply_command(server, clientSocket, command);
+    return;
 }

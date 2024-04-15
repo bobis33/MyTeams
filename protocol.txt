@@ -14,6 +14,7 @@ Codes:
         "508: already subscribed"                       (print la string dans stdout)
         "509: not subscribed"                           (print la string dans stdout)
         "510: not subscribed"                           (event: client_error_unauthorized)
+        "511: a channel with this name already exists"  (event: client_error_already_exist)
 
     Commands reponses related:
         "100: successfully logged in ["uuid"]"                                                                                  (event: client_event_logged_in)
@@ -25,9 +26,11 @@ Codes:
         "106: message list [[["sender uuid"] ["unix timestamp"] ["message"]]\n * messsage count]                                (event: client_private_message_print_messages, faut l'appeler pour chaque user de la liste)
         "107: team created ["team uuid"]"                                                                                       (event: client_print_team_created)
         "108: team list [[["team name"] ["team uuid"] ["team description]]\n * team count]"                                     (event: client_print_teams, faut l'appeler pour chaque team de la liste)
+        "109: channel created ["channel uuid"]"                                                                                 (event: client_print_channel_created)
 
     Server events related:
         "200: team created ["team uuid"] ["team name"] ["team desc"]"                                                           (event: client_event_team_created)
+        "201: channel created ["channel uuid"] ["channel name"] ["channel desc"]"                                               (event: client_event_channel_created)
 
 
 Commands:
@@ -115,14 +118,17 @@ Commands:
             client -> server: "/create ["comment_body"]"                                (create a reply in a thread)
 
         reponses:
-            server -> client: "500: invalid syntax"                                                     (print la string dans stdout)
-            server -> client: "502: no logged in"                                                       (event: client_error_unauthorized)
-            server -> client: "505: a team with this name already exists"                               (event: client_error_already_exist)
+            server -> client: "500: invalid syntax"                                                                             (print la string dans stdout)
+            server -> client: "502: no logged in"                                                                               (event: client_error_unauthorized)
+            server -> client: "505: a team with this name already exists"                                                       (event: client_error_already_exist)
+            server -> client: "511: a channel with this name already exists"                                                    (event: client_error_already_exist)
 
-            server -> client: "107: team created ["team uuid"]"                                         (event: client_print_team_created)
+            server -> client: "107: team created ["team uuid"]"                                                                 (event: client_print_team_created)
+            server -> client: "109: channel created ["channel uuid"]"                                                           (event: client_print_channel_created)
 
         events:
-            server -> all client: "200: team created ["team uuid"] ["team name"] ["team desc"]"         (event: client_event_team_created)
+            server -> all client: "200: team created ["team uuid"] ["team name"] ["team desc"]"                                 (event: client_event_team_created)
+            server -> all subscribed clients: "201: channel created ["channel uuid"] ["channel name"] ["channel desc"]"         (event: client_event_channel_created)
 
 
     Use: (seul les deux premières sont implémentées)
