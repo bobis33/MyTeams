@@ -29,9 +29,10 @@ static user_t *create_user(server_t *server, char *username)
 static void log_event_user_logged_in(char *uuid, bool user_created,
     char *username)
 {
-    if (user_created)
+    if (user_created) {
         server_event_user_created(uuid, username);
-    else
+        server_event_user_logged_in(uuid);
+    } else
         server_event_user_logged_in(uuid);
 }
 
