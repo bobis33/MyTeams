@@ -117,6 +117,8 @@ int main(int argc, const char *argv[])
     return SUCCESS;
 }
 
+// int client_error_unknown_team(char const *team_uuid);
+
 /* Commands:
     /help : show help                                        - YES
     /login [“user_name”]                                     - YES
