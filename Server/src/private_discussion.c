@@ -13,7 +13,7 @@
 
 void create_private_discussion(server_t *server, user_t *user1, user_t *user2)
 {
-    private_discussion_t private_discussion;
+    private_discussion_t private_discussion = {0};
 
     private_discussion.user1 = user1;
     private_discussion.user2 = user2;

@@ -16,10 +16,8 @@ OBJ =			$(SRC:.c=.o)
 
 INC =			-I./include -I./../libs/myteams
 LIB =			-luuid -L./../libs/myteams -lmyteams
-RPATH = 		-Wl,-rpath,./libs/myteams
 
-CFLAGS =		-W -Wall -Wextra $(INC) $(LIB) $(RPATH) \
-				-std=c11 -D_GNU_SOURCE
+CFLAGS =		-W -Wall -Wextra $(INC) $(LIB) -std=c11 -D_GNU_SOURCE
 
 NAME =			myteams_cli
 
