@@ -5,7 +5,9 @@
 ** client.c
 */
 
+#include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "client.h"
@@ -21,43 +23,49 @@ static const char *commands[] = {
 static void (*functions[])(client_t *client, char *request, char *response) = {
     handle_help_command,
     handle_login_command,
-    handle_logout_command
+    handle_logout_command,
+    handle_users_command,
+    handle_user_command
 };
 
-static char *get_request(void)
+static char *get_request(char *request)
 {
-    char *request = malloc(sizeof(char) * MAX_CHAR_SIZE);
-    if (read(0, request, MAX_CHAR_SIZE) < 0) {
-        perror("read");
+    int bytes_read = (int) read(0, request, MAX_CHAR_SIZE);
+
+    if (bytes_read < 0) {
         return NULL;
     }
+    request[bytes_read - 1] = '\r';
+    request[bytes_read] = '\n';
+    request[bytes_read + 1] = '\0';
     return request;
 }
 
-static char *get_response(int file_descriptor, char *request)
+static char *get_response(int file_descriptor, char *request, char *response)
 {
-    char *buffer = malloc(sizeof(char) * MAX_CHAR_SIZE);
-    request[strcspn(request, "\0")] = '\n';
+    int bytes_read = 0;
+
     if (write(file_descriptor, request, strlen(request)) < 0) {
-        perror("write");
         return NULL;
     }
-    if (read(file_descriptor, buffer, MAX_CHAR_SIZE) < 0){
-        perror("read");
+    bytes_read = (int) read(file_descriptor, response, MAX_CHAR_SIZE);
+    if (bytes_read < 0){
         return NULL;
     }
-    buffer[strlen(buffer)] = '\0';
-    return buffer;
+    response[bytes_read] = '\0';
+    return response;
 }
 
-static int parse_request(char *request, char *response)
+static int parse_request(client_t *client, char *request, char *response)
 {
     char *token = strtok(request, " ");
-    if (token != NULL) {
-        for (int i = 0; i < 3; i++) {
-            if (strncmp(token, commands[i], strlen(commands[i])) == 0) {
-                functions[i](NULL, request, response);
-            }
+
+    if (token == NULL)
+        return ERROR;
+    for (int i = 0; i < 5; i++) {
+        if (strncmp(token, commands[i], strlen(commands[i])) == 0) {
+            functions[i](client, request, response);
+            return SUCCESS;
         }
     }
     return SUCCESS;
@@ -65,17 +73,13 @@ static int parse_request(char *request, char *response)
 
 static int client_loop(client_t *client)
 {
-    char *request = NULL;
-    char *response = NULL;
+    char request[1024];
+    char response[1024];
+
     while (1) {
-        request = get_request();
-        if (!request)
-            return ERROR;
-        response = get_response(client->sockfd, request);
-        if (!response)
-            return ERROR;
-        printf("%s", response);
-        if (parse_request(request, response) == ERROR)
+        get_request(request);
+        get_response(client->sockfd, request, response);
+        if (parse_request(client, request, response) == ERROR)
             return ERROR;
     }
     close(client->sockfd);
@@ -88,14 +92,12 @@ int run_client(client_t *client)
 {
     client->sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (client->sockfd < 0) {
-        perror("socket");
         return ERROR;
     }
     client->socket_address.sin_family = AF_INET;
     client->socket_address.sin_port = client->port;
     if (connect(client->sockfd, (struct sockaddr *)&client->socket_address,
                 sizeof(client->socket_address)) < 0) {
-        perror("connect");
         return ERROR;
     }
     return client_loop(client);

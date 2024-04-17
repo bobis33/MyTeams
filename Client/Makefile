@@ -10,6 +10,7 @@ SRC =           src/main.c         				\
                 src/client.c       				\
 				src/commands/help.c				\
 				src/commands/login.c			\
+				src/commands/user.c			\
 
 OBJ =			$(SRC:.c=.o)
 

@@ -26,6 +26,7 @@ typedef struct client_s {
     char *ip;
     int sockfd;
     struct sockaddr_in socket_address;
+    char *user_name;
 } client_t;
 
 int parse_args(const char *ip, const char *port, client_t *client);
