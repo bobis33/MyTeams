@@ -5,16 +5,19 @@
 ## Makefile
 ##
 
-SRC =           src/main.c         \
-                src/parse_args.c   \
-                src/client.c       \
+SRC =           src/main.c         				\
+                src/parse_args.c   				\
+                src/client.c       				\
+				src/commands/help.c				\
+				src/commands/login.c			\
+				src/commands/user.c			\
 
 OBJ =			$(SRC:.c=.o)
 
 INC =			-I./include -I./../libs/myteams
 LIB =			-luuid -L./../libs/myteams -lmyteams
 
-CFLAGS =		-W -Wall -Werror -Wextra $(INC) $(LIB) -std=c11 -D_GNU_SOURCE
+CFLAGS =		-W -Wall -Wextra $(INC) $(LIB) -std=c11 -D_GNU_SOURCE
 
 NAME =			myteams_cli
 

@@ -10,7 +10,7 @@
 
 #include "client.h"
 
-int parse_args(const char *ip, const char *port, struct client *client)
+int parse_args(const char *ip, const char *port, client_t *client)
 {
     int inet_pton_return = 0;
     int converted_port = atoi(port);
@@ -23,7 +23,6 @@ int parse_args(const char *ip, const char *port, struct client *client)
     inet_pton_return =
         inet_pton(AF_INET, ip, &client->socket_address.sin_addr);
     if (inet_pton_return <= 0) {
-        perror("inet_pton");
         return ERROR;
     } else {
         client->ip = strdup(ip);
