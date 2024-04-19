@@ -8,25 +8,16 @@
 #include "client.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-
-void handle_user_command(client_t *client, char *request, char *response)
-{
-    char *token = strtok(response, ":");
-    int code = atoi(token);
-    char *arg;
-
-    (void) client;
-    (void) request;
-    (void) arg;
-    (void) code;
-}
 
 static char *get_name(char *token)
 {
-    char *user_name;
+    char *user_name = NULL;
 
     token = strtok(NULL, "[]");
+    if (token == NULL)
+        return NULL;
     user_name = token;
     user_name = user_name + 1;
     user_name[strlen(user_name) - 1] = '\0';
@@ -35,7 +26,7 @@ static char *get_name(char *token)
 
 static char *get_uuid(char *token)
 {
-    char *user_uuid;
+    char *user_uuid = NULL;
 
     token = strtok(NULL, "[]");
     token = strtok(NULL, "[]");
@@ -64,6 +55,8 @@ static void call_all_users(char *token)
 
     while (true) {
         user_name = get_name(token);
+        if (user_name == NULL)
+            break;
         user_uuid = get_uuid(token);
         if (user_uuid == NULL)
             break;
@@ -88,4 +81,49 @@ void handle_users_command(client_t *client, char *request, char *response)
     }
     (void) client;
     (void) request;
+}
+
+static void user_handle_other_cases(int code, char *request)
+{
+    if (code == 500)
+        printf("%s", strtok(NULL, "\0"));
+    if (code == 502)
+        client_error_unauthorized();
+    if (code == 503) {
+        request = request + 7;
+        request[strlen(request) - 3] = '\0';
+        client_error_unknown_user(request);
+    }
+}
+
+void user_handle_main_case(int code)
+{
+    char *user_name = NULL;
+    char *user_uuid = NULL;
+    char *status_str = NULL;
+    int user_status;
+
+    if (code == 103) {
+        strtok(NULL, " ");
+        strtok(NULL, " ");
+        user_name = strtok(NULL, "[]") + 1;
+        user_name[strlen(user_name) - 1] = '\0';
+        user_uuid = strtok(NULL, "[]") + 1;
+        user_uuid[strlen(user_uuid) - 1] = '\0';
+        strtok(NULL, "[");
+        status_str = strtok(NULL, "[]") + 1;
+        status_str[strlen(status_str) - 1] = '\0';
+        user_status = atoi(status_str);
+        client_print_user(user_uuid, user_name, user_status);
+    }
+}
+
+void handle_user_command(client_t *client, char *request, char *response)
+{
+    char *token = strtok(response, ":");
+    int code = atoi(token);
+
+    user_handle_other_cases(code, request);
+    user_handle_main_case(code);
+    (void) client;
 }

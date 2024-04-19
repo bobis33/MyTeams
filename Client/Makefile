@@ -10,7 +10,14 @@ SRC =           src/main.c         				\
                 src/client.c       				\
 				src/commands/help.c				\
 				src/commands/login.c			\
-				src/commands/user.c			\
+				src/commands/user.c				\
+				src/commands/send.c				\
+				src/commands/messages.c			\
+				src/commands/create.c			\
+				src/commands/use.c				\
+				src/commands/subscribe.c		\
+				src/commands/unsubscribe.c		\
+				src/commands/subscribed.c		\
 
 OBJ =			$(SRC:.c=.o)
 

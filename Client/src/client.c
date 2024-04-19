@@ -16,8 +16,8 @@
 
 static const char *commands[] = {
     "/help", "/login", "/logout", "/users", "/user", "/send",
-    "/messages", "/subscribe", "/subscribed", "/unsubscribe",
-    "/use", "/create", "/list", "/info", "/stop"
+    "/messages", "/create", "/use", "/subscribed",
+    "/unsubscribe", "/subscribe", "/list", "/info", "/stop"
 };
 
 static void (*functions[])(client_t *client, char *request, char *response) = {
@@ -25,7 +25,14 @@ static void (*functions[])(client_t *client, char *request, char *response) = {
     handle_login_command,
     handle_logout_command,
     handle_users_command,
-    handle_user_command
+    handle_user_command,
+    handle_send_command,
+    handle_messages_command,
+    handle_create_command,
+    handle_use_command,
+    handle_subscribed_command,
+    handle_subscribe_command,
+    handle_unsubscribe_command
 };
 
 static char *get_request(char *request)
@@ -52,18 +59,14 @@ static char *get_response(int file_descriptor, char *request, char *response)
     if (bytes_read < 0){
         return NULL;
     }
-    response[bytes_read] = '\0';
+    response[bytes_read - 1] = '\0';
     return response;
 }
 
 static int parse_request(client_t *client, char *request, char *response)
 {
-    char *token = strtok(request, " ");
-
-    if (token == NULL)
-        return ERROR;
-    for (int i = 0; i < 5; i++) {
-        if (strncmp(token, commands[i], strlen(commands[i])) == 0) {
+    for (int i = 0; i < 12; i++) {
+        if (strncmp(request, commands[i], strlen(commands[i])) == 0) {
             functions[i](client, request, response);
             return SUCCESS;
         }

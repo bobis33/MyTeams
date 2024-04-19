@@ -21,6 +21,7 @@ int main(int argc, const char *argv[])
     client_t *client = malloc(sizeof(client_t));
 
     client->user_name = NULL;
+    client->uuid = NULL;
     if (argc == 2 && strcmp(argv[1], "-help") == 0) {
         print_help();
         return SUCCESS;

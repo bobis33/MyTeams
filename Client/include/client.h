@@ -27,7 +27,14 @@ typedef struct client_s {
     int sockfd;
     struct sockaddr_in socket_address;
     char *user_name;
+    char *uuid;
 } client_t;
+
+typedef struct message_s {
+    char *user_uuid;
+    char *timestamp;
+    char *message;
+} message_t;
 
 int parse_args(const char *ip, const char *port, client_t *client);
 
