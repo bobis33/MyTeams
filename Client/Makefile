@@ -18,6 +18,7 @@ SRC =           src/main.c         				\
 				src/commands/subscribe.c		\
 				src/commands/unsubscribe.c		\
 				src/commands/subscribed.c		\
+				src/events/send.c				\
 
 OBJ =			$(SRC:.c=.o)
 

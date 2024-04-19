@@ -12,6 +12,7 @@
 
 #include "client.h"
 #include "commands.h"
+#include "events.h"
 
 
 static const char *commands[] = {
@@ -20,7 +21,17 @@ static const char *commands[] = {
     "/unsubscribe", "/subscribe", "/list", "/info", "/stop"
 };
 
-static void (*functions[])(client_t *client, char *request, char *response) = {
+static const int events_code[] = {
+    104,
+    200,
+    201
+};
+static void (*events_functions[])(char *response) = {
+    handle_send_event,
+};
+
+static void (*commands_functions[])
+(client_t *client, char *request, char *response) = {
     handle_help_command,
     handle_login_command,
     handle_logout_command,
@@ -35,17 +46,62 @@ static void (*functions[])(client_t *client, char *request, char *response) = {
     handle_unsubscribe_command
 };
 
-static char *get_request(char *request)
+static int read_event(int file_descriptor, char *response)
 {
-    int bytes_read = (int) read(0, request, MAX_CHAR_SIZE);
+    int bytes_read = 0;
+    int code = 0;
+    char *temp_response = NULL;
 
-    if (bytes_read < 0) {
-        return NULL;
+    bytes_read = (int) read(file_descriptor, response, MAX_CHAR_SIZE);
+    if (bytes_read < 0)
+        return ERROR;
+    response[bytes_read - 1] = '\0';
+    temp_response = strdup(response);
+    code = atoi(strtok(response, ":"));
+    for (int i = 0; i < 1; i++) {
+        if (code == events_code[i]) {
+            events_functions[i](temp_response);
+            return SUCCESS;
+        }
     }
+    return SUCCESS;
+}
+
+static int read_input(char *request)
+{
+    int bytes_read = 0;
+
+    bytes_read = (int) read(0, request, MAX_CHAR_SIZE);
+    if (bytes_read < 0)
+        return ERROR;
     request[bytes_read - 1] = '\r';
     request[bytes_read] = '\n';
     request[bytes_read + 1] = '\0';
-    return request;
+    return SUCCESS;
+}
+
+static int select_input_or_event
+(int file_descriptor, char *request, char *response)
+{
+    fd_set read_fds;
+    int max_fd;
+
+    FD_ZERO(&read_fds);
+    FD_SET(file_descriptor, &read_fds);
+    FD_SET(STDOUT_FILENO, &read_fds);
+    max_fd = (file_descriptor > STDOUT_FILENO) ?
+    file_descriptor : STDOUT_FILENO;
+    if (select(max_fd + 1, &read_fds, NULL, NULL, NULL) < 0)
+        return ERROR;
+    if (FD_ISSET(file_descriptor, &read_fds)) {
+        if (read_event(file_descriptor, response) == ERROR)
+            return ERROR;
+        select_input_or_event(file_descriptor, request, response);
+    }
+    if (FD_ISSET(STDOUT_FILENO, &read_fds))
+        if (read_input(request) == ERROR)
+            return ERROR;
+    return SUCCESS;
 }
 
 static char *get_response(int file_descriptor, char *request, char *response)
@@ -67,7 +123,7 @@ static int parse_request(client_t *client, char *request, char *response)
 {
     for (int i = 0; i < 12; i++) {
         if (strncmp(request, commands[i], strlen(commands[i])) == 0) {
-            functions[i](client, request, response);
+            commands_functions[i](client, request, response);
             return SUCCESS;
         }
     }
@@ -80,7 +136,7 @@ static int client_loop(client_t *client)
     char response[1024];
 
     while (1) {
-        get_request(request);
+        select_input_or_event(client->sockfd, request, response);
         get_response(client->sockfd, request, response);
         if (parse_request(client, request, response) == ERROR)
             return ERROR;
