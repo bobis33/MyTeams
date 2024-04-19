@@ -11,12 +11,13 @@
 
 void handle_send_command(client_t *client, char *request, char *response)
 {
+    char *temp_response = strdup(response);
     char *token = strtok(response, ":");
     int code = atoi(token);
     char *receiver_uuid = NULL;
 
     if (code == 500) {
-        printf("%s", response);
+        printf("%s", temp_response);
         return;
     }
     if (code == 502) {

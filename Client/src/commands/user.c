@@ -68,6 +68,7 @@ static void call_all_users(char *token)
 
 void handle_users_command(client_t *client, char *request, char *response)
 {
+    char *temp_response = strdup(response);
     char *token = strtok(response, ":");
     int code = atoi(token);
 
@@ -77,16 +78,16 @@ void handle_users_command(client_t *client, char *request, char *response)
     } else if (code == 502) {
         client_error_unauthorized();
     } else {
-        printf("%s", strtok(NULL, "\0"));
+        printf("%s", temp_response);
     }
     (void) client;
     (void) request;
 }
 
-static void user_handle_other_cases(int code, char *request)
+static void user_handle_other_cases(int code, char *request, char *temp_request)
 {
     if (code == 500)
-        printf("%s", strtok(NULL, "\0"));
+        printf("%s", temp_request);
     if (code == 502)
         client_error_unauthorized();
     if (code == 503) {
@@ -120,10 +121,11 @@ void user_handle_main_case(int code)
 
 void handle_user_command(client_t *client, char *request, char *response)
 {
+    char *temp_request = strdup(request);
     char *token = strtok(response, ":");
     int code = atoi(token);
 
-    user_handle_other_cases(code, request);
+    user_handle_other_cases(code, request, temp_request);
     user_handle_main_case(code);
     (void) client;
 }

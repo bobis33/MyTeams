@@ -24,10 +24,9 @@ static void parse_response(char *token, int x, message_t message)
         if (x == 3) {
             message.message = token;
             x = 0;
-            message.timestamp++;
-            message.timestamp[strlen(message.timestamp) - 1] = '\0';
-            client_private_message_print_messages(message.user_uuid,
-            atoi(message.timestamp), message.message);
+            client_private_message_print_messages
+            (strtok(message.user_uuid, "\"\""), atoi(strtok
+            (message.timestamp, "\"\"")), strtok(message.message, "\"\""));
         }
     }
 }
@@ -41,7 +40,7 @@ void handle_messages_command(client_t *client, char *request, char *response)
     message_t message;
 
     if (code == 500)
-        printf("%s", response);
+        printf("%s", temp_response);
     if (code == 502)
         client_error_unauthorized();
     if (code == 503) {
