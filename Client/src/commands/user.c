@@ -84,7 +84,8 @@ void handle_users_command(client_t *client, char *request, char *response)
     (void) request;
 }
 
-static void user_handle_other_cases(int code, char *request, char *temp_request)
+static void user_handle_other_cases
+(int code, char *request, char *temp_request)
 {
     if (code == 500)
         printf("%s", temp_request);

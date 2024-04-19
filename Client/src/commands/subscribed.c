@@ -10,10 +10,10 @@
 #include "client.h"
 #include "logging_client.h"
 
-static void parse_user_list(char *response, int x)
+static void parse_user_list(char *response, message_t message, int x)
 {
-    message_t message;
     char *token = strtok(response, "[]");
+
     while (token != NULL) {
         token = strtok(NULL, "[]");
         if (token == NULL)
@@ -34,10 +34,10 @@ static void parse_user_list(char *response, int x)
     }
 }
 
-static void parse_team_list(char *response, int x)
+static void parse_team_list(char *response, message_t message, int x)
 {
-    message_t message;
     char *token = strtok(response, "[]");
+
     while (token != NULL) {
         token = strtok(NULL, "[]");
         if (token == NULL)
@@ -62,22 +62,22 @@ void handle_subscribed_command(client_t *client, char *request, char *response)
 {
     char *temp_response = strdup(response);
     char *token = strtok(temp_response, ":");
-    int code = atoi(token);
+    message_t message;
     int x = 0;
 
-    if (code == 500)
+    if (atoi(token) == 500)
         printf("%s", response);
-    if (code == 502)
+    if (atoi(token) == 502)
         client_error_unauthorized();
-    if (code == 507) {
+    if (atoi(token) == 507) {
         request[strlen(request) - 3] = '\0';
         client_error_unknown_team(request + 12);
     }
-    if (code == 510)
+    if (atoi(token) == 510)
         client_error_unauthorized();
-    if (code == 102)
-        parse_user_list(response, x);
-    if (code == 108)
-        parse_team_list(response, x);
+    if (atoi(token) == 102)
+        parse_user_list(response, message, x);
+    if (atoi(token) == 108)
+        parse_team_list(response, message, x);
     (void) client;
 }
