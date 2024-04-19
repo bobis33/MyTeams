@@ -28,6 +28,8 @@ static const int events_code[] = {
 };
 static void (*events_functions[])(char *response) = {
     handle_send_event,
+    handle_create_200_event,
+    handle_create_201_event
 };
 
 static void (*commands_functions[])
@@ -58,7 +60,7 @@ static int read_event(int file_descriptor, char *response)
     response[bytes_read - 1] = '\0';
     temp_response = strdup(response);
     code = atoi(strtok(response, ":"));
-    for (int i = 0; i < 1; i++) {
+    for (int i = 0; i < 3; i++) {
         if (code == events_code[i]) {
             events_functions[i](temp_response);
             return SUCCESS;
