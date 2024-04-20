@@ -30,7 +30,7 @@ INC =			-I./include -I./../libs/myteams
 LIB =			-luuid -L./../libs/myteams -lmyteams
 
 CFLAGS =		-W -Wall -Werror -Wextra $(INC) $(LIB) -std=c11	\
-				-D_GNU_SOURCE -g3
+				-D_GNU_SOURCE
 
 NAME =			myteams_server
 

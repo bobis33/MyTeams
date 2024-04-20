@@ -71,14 +71,17 @@ static int read_event(int file_descriptor, char *response)
 
 static int read_input(char *request)
 {
-    int bytes_read = 0;
+    size_t len = 0;
+    ssize_t read = 0;
+    char *line = NULL;
 
-    bytes_read = (int) read(0, request, MAX_CHAR_SIZE);
-    if (bytes_read < 0)
-        return ERROR;
-    request[bytes_read - 1] = '\r';
-    request[bytes_read] = '\n';
-    request[bytes_read + 1] = '\0';
+    read = getline(&line, &len, stdin);
+    if (read < 0)
+        exit(0);
+    strncpy(request, line, read - 1);
+    request[read - 1] = '\r';
+    request[read] = '\n';
+    request[read + 1] = '\0';
     return SUCCESS;
 }
 
