@@ -16,15 +16,13 @@ void handle_subscribe_command(client_t *client, char *request, char *response)
     int code = atoi(token);
 
     if (code == 500)
-        printf("%s", temp_response);
+        printf("%s\n", temp_response);
     if (code == 502)
         client_error_unauthorized();
     if (code == 507) {
-        request[strlen(request) - 3] = '\0';
-        client_error_unknown_team(request + 12);
+        client_error_unknown_team(strtok(request + 12, "\"\""));
     }
     if (code == 508)
-        printf("%s", temp_response);
-    (void) request;
+        printf("%s\n", temp_response);
     (void) client;
 }

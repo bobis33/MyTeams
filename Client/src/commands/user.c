@@ -78,7 +78,7 @@ void handle_users_command(client_t *client, char *request, char *response)
     } else if (code == 502) {
         client_error_unauthorized();
     } else {
-        printf("%s", temp_response);
+        printf("%s\n", temp_response);
     }
     (void) client;
     (void) request;
@@ -88,7 +88,7 @@ static void user_handle_other_cases
 (int code, char *request, char *temp_request)
 {
     if (code == 500)
-        printf("%s", temp_request);
+        printf("%s\n", temp_request);
     if (code == 502)
         client_error_unauthorized();
     if (code == 503) {

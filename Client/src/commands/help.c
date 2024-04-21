@@ -30,13 +30,14 @@ static void print_help_message(void)
 
 void handle_help_command(client_t *client, char *request, char *response)
 {
+    char *temp_response = strdup(response);
     char *token = strtok(response, ":");
     int code = atoi(token);
 
     if (code == 105) {
         print_help_message();
     } else {
-        printf("%s", strtok(NULL, "\0"));
+        printf("%s\n", temp_response);
     }
     (void) client;
     (void) request;

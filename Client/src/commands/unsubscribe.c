@@ -17,7 +17,7 @@ void handle_unsubscribe_command
     int code = atoi(token);
 
     if (code == 500)
-        printf("%s", temp_response);
+        printf("%s\n", temp_response);
     if (code == 502)
         client_error_unauthorized();
     if (code == 507) {
@@ -25,7 +25,7 @@ void handle_unsubscribe_command
         client_error_unknown_team(request + 14);
     }
     if (code == 509)
-        printf("%s", temp_response);
+        printf("%s\n", temp_response);
     (void) request;
     (void) client;
 }

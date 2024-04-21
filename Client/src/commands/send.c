@@ -17,7 +17,7 @@ void handle_send_command(client_t *client, char *request, char *response)
     char *receiver_uuid = NULL;
 
     if (code == 500) {
-        printf("%s", temp_response);
+        printf("%s\n", temp_response);
         return;
     }
     if (code == 502) {

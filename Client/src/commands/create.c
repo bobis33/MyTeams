@@ -57,7 +57,7 @@ void handle_create_command(client_t *client, char *request, char *response)
     int code = atoi(token);
 
     if (code == 500)
-        printf("%s", temp_response);
+        printf("%s\n", temp_response);
     if (code == 502)
         client_error_unauthorized();
     if (code == 505)

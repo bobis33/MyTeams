@@ -65,13 +65,13 @@ void handle_subscribed_command(client_t *client, char *request, char *response)
     message_t message;
     int x = 0;
 
+    printf("test2\n");
     if (atoi(token) == 500)
         printf("%s", response);
     if (atoi(token) == 502)
         client_error_unauthorized();
     if (atoi(token) == 507) {
-        request[strlen(request) - 3] = '\0';
-        client_error_unknown_team(request + 12);
+        client_error_unknown_team((strtok(request, "\"\"")));
     }
     if (atoi(token) == 510)
         client_error_unauthorized();

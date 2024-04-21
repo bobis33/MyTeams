@@ -10,6 +10,7 @@
 
 void handle_login_command(client_t *client, char *request, char *response)
 {
+    char *temp_response = strdup(response);
     char *token = strtok(response, ":");
     int code = atoi(token);
     char *uuid = NULL;
@@ -24,12 +25,13 @@ void handle_login_command(client_t *client, char *request, char *response)
         request[strlen(request) - 1] = '\0';
         client_event_logged_in(uuid, client->user_name);
     } else {
-        printf("%s", strtok(NULL, "\0"));
+        printf("%s\n", temp_response);
     }
 }
 
 void handle_logout_command(client_t *client, char *request, char *response)
 {
+    char *temp_response = strdup(response);
     char *token = strtok(response, ":");
     int code = atoi(token);
     char *uuid = NULL;
@@ -43,6 +45,6 @@ void handle_logout_command(client_t *client, char *request, char *response)
     } else if (code == 502) {
         client_error_unauthorized();
     } else {
-        printf("%s", strtok(NULL, "\0"));
+        printf("%s\n", temp_response);
     }
 }

@@ -47,8 +47,8 @@ static void (*commands_functions[])
     handle_create_command,
     handle_use_command,
     handle_subscribed_command,
-    handle_subscribe_command,
-    handle_unsubscribe_command
+    handle_unsubscribe_command,
+    handle_subscribe_command
 };
 
 static int read_event(int file_descriptor, char *response)

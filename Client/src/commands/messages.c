@@ -40,12 +40,12 @@ void handle_messages_command(client_t *client, char *request, char *response)
     message_t message;
 
     if (code == 500)
-        printf("%s", temp_response);
+        printf("%s\n", temp_response);
     if (code == 502)
         client_error_unauthorized();
     if (code == 503) {
         request[strlen(request) - 1] = '\0';
-        client_error_unknown_user(request + 10);
+        client_error_unknown_user(strtok(request + 10, "\"\""));
     }
     if (code == 106)
         parse_response(strtok(temp_response, "[]"), x, message);

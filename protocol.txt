@@ -77,7 +77,7 @@ Commands:
         command:
             client -> server: "/user ["uuid"]"
 
-        responses:
+        responses:                               
             server -> client: "500: invalid syntax"                                                                                     (print la string dans stdout)
             server -> client: "502: no logged in"                                                                                       (event: client_error_unauthorized)
             server -> client: "503: unknown user"                                                                                       (event: client_error_unknown_user)
