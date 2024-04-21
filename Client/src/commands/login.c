@@ -18,7 +18,8 @@ void handle_login_command(client_t *client, char *request, char *response)
     token = strtok(NULL, "\"]");
     uuid = token;
     if (code == 100) {
-        client->user_name = strdup(request + 7);
+        client->user_name = strdup(request + 8);
+        client->user_name[strlen(client->user_name) - 3] = '\0';
         client->uuid = strdup(uuid);
         request[strlen(request) - 1] = '\0';
         client_event_logged_in(uuid, client->user_name);

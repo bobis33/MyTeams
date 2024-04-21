@@ -14,7 +14,6 @@
 #include "commands.h"
 #include "events.h"
 
-
 static const char *commands[] = {
     "/help", "/login", "/logout", "/users", "/user", "/send",
     "/messages", "/create", "/use", "/subscribed",
@@ -24,12 +23,16 @@ static const char *commands[] = {
 static const int events_code[] = {
     104,
     200,
-    201
+    201,
+    100,
+    101
 };
 static void (*events_functions[])(char *response) = {
     handle_send_event,
     handle_create_200_event,
-    handle_create_201_event
+    handle_create_201_event,
+    handle_100_event,
+    handle_101_event
 };
 
 static void (*commands_functions[])
@@ -55,12 +58,12 @@ static int read_event(int file_descriptor, char *response)
     char *temp_response = NULL;
 
     bytes_read = (int) read(file_descriptor, response, MAX_CHAR_SIZE);
-    if (bytes_read < 0)
-        return ERROR;
+    if (bytes_read <= 0)
+        exit(0);
     response[bytes_read - 1] = '\0';
     temp_response = strdup(response);
     code = atoi(strtok(response, ":"));
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 5; i++) {
         if (code == events_code[i]) {
             events_functions[i](temp_response);
             return SUCCESS;
