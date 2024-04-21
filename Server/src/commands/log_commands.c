@@ -10,6 +10,7 @@
 #include "server.h"
 #include "utils.h"
 
+#include <sys/select.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
@@ -36,6 +37,16 @@ static void log_event_user_logged_in(char *uuid, bool user_created,
         server_event_user_logged_in(uuid);
 }
 
+static void event_login(server_t *server, char *uuidStr, char *username)
+{
+    for (int i = 0; i < FD_SETSIZE; i++) {
+        if (i != server->socket && FD_ISSET(i, &server->readFds)) {
+            send_to_client(server, i, "100: successfully logged in [\"%s\"]"
+                " [\"%s\"]\n", uuidStr, username);
+        }
+    }
+}
+
 // What if the user was already logged in?
 void handle_login_command(server_t *server, int clientSocket, char *command)
 {
@@ -57,8 +68,17 @@ void handle_login_command(server_t *server, int clientSocket, char *command)
     server->clients[clientSocket].user = user;
     uuid_unparse(user->uuid, uuidStr);
     log_event_user_logged_in(uuidStr, !user_found, username);
-    send_to_client(server, clientSocket,
-        "100: successfully logged in [\"%s\"]\n", uuidStr);
+    event_login(server, uuidStr, username);
+}
+
+static void event_logout(server_t *server, char *uuidStr, char *username)
+{
+    for (int i = 0; i < FD_SETSIZE; i++) {
+        if (i != server->socket && FD_ISSET(i, &server->readFds)) {
+            send_to_client(server, i, "101: successfully logged out"
+            " [\"%s\"] [\"%s\"]\n", uuidStr, username);
+        }
+    }
 }
 
 void handle_logout_command(server_t *server, int clientSocket, char *command)
@@ -76,7 +96,6 @@ void handle_logout_command(server_t *server, int clientSocket, char *command)
     }
     uuid_unparse(server->clients[clientSocket].user->uuid, uuidStr);
     server_event_user_logged_out(uuidStr);
+    event_logout(server, uuidStr, server->clients[clientSocket].user->name);
     server->clients[clientSocket].user = NULL;
-    send_to_client(server, clientSocket,
-        "101: successfully logged out [\"%s\"]\n", uuidStr);
 }

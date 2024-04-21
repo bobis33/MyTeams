@@ -20,6 +20,7 @@ SRC =           src/main.c         				\
 				src/commands/subscribed.c		\
 				src/events/send.c				\
 				src/events/create.c				\
+				src/events/login.c				\
 
 OBJ =			$(SRC:.c=.o)
 
